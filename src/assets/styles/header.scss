@@ -1,0 +1,49 @@
+.header-container {
+  min-height: 5rem;
+
+  .logo-container {
+    align-items: center;
+  }
+
+  .logo-container > h1 {
+    font-family: 'Pacifico', cursive;
+  }
+
+  .nav-link {
+    gap: 3rem;
+    font-family: cursive;
+    font-size: large;
+  }
+
+  .search-bar {
+    height: 2rem;
+    width: 70%;
+    background: aliceblue;
+    justify-content: space-between;
+    border-radius: 1rem;
+  }
+
+  input,
+  button {
+    background: transparent;
+    border: 0;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .search-bar {
+      width: 14rem;
+    }
+    .nav-link {
+      gap: 2rem;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .search-bar {
+      width: 11rem;
+    }
+    .nav-link {
+      gap: 1rem;
+    }
+  }
+}

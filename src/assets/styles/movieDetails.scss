@@ -1,0 +1,28 @@
+.movie-container {
+  .card-container {
+    width: 700px;
+    text-align: center;
+    background: var(--color-primary-variant);
+    padding: 2rem;
+    border-radius: 3rem;
+  }
+  img {
+    width: 90%;
+    padding: 1rem;
+  }
+  h2 {
+    color: bisque;
+  }
+  .movie-text {
+    padding: 1rem;
+  }
+  h3 {
+    color: var(--color-light);
+    padding: 0.5rem;
+    font-weight: 600;
+  }
+  p {
+    color: var(--color-white);
+    font-size: medium;
+  }
+}
