@@ -1,6 +1,13 @@
 .header-container {
   min-height: 5rem;
 
+  .menu-container {
+    display: none;
+  }
+  .menu-container.open {
+    display: block;
+  }
+
   .logo-container {
     align-items: center;
   }

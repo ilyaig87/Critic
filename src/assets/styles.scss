@@ -1,11 +1,15 @@
 // BASICS
 @import 'basics/base';
 
+//HELPERS
 @import 'basics/helpers';
 
 //CMPS
-@import '/src/assets/styles/header.scss';
 @import '/src/assets/styles/movies.scss';
 @import '/src/assets/styles/movieDetails.scss';
 @import '/src/assets/styles/about.scss';
 @import '/src/assets/styles/contact.scss';
+
+//VIEWS
+@import '/src/assets/styles/header.scss';
+@import '/src/assets/styles/footer.scss';

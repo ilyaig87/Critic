@@ -8,6 +8,11 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 const MovieDetails = () => {
   let [movie, setMovie] = useState(null)
 
+  const [showFullText, setShowFullText] = useState(false)
+  const handleReadMore = () => {
+    setShowFullText(!showFullText)
+  }
+
   const params = useParams()
 
   useEffect(() => {
@@ -45,7 +50,12 @@ const MovieDetails = () => {
             ></iframe>
           </div>
           <div className='movie-text'>
-            <p>{movie.overview}</p>
+            <p className={`${!showFullText ? 'limited-lines' : ''}`}>
+              {movie.overview}
+            </p>
+            <button className='btn read-more-btn' onClick={handleReadMore}>
+              {showFullText ? 'Read Less' : 'Read More'}
+            </button>
             <h5>Movie Release Date: {convertDate(movie.release_date)}</h5>
             <Link to={`/`} className='btn btn-primary'>
               Go Back
