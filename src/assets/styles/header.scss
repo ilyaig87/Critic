@@ -17,7 +17,7 @@
 
   .search-bar {
     height: 2rem;
-    width: 70%;
+    width: 60%;
     background: aliceblue;
     justify-content: space-between;
     border-radius: 1rem;
@@ -28,8 +28,10 @@
     background: transparent;
     border: 0;
   }
+}
 
-  @media screen and (max-width: 1024px) {
+@media screen and (max-width: 1024px) {
+  .header-container {
     .search-bar {
       width: 14rem;
     }
@@ -37,10 +39,11 @@
       gap: 2rem;
     }
   }
-
-  @media screen and (max-width: 600px) {
+}
+@media screen and (max-width: 600px) {
+  .header-container {
     .search-bar {
-      width: 11rem;
+      width: 10rem;
     }
     .nav-link {
       gap: 1rem;
