@@ -10,7 +10,7 @@ const Contact = () => {
       </div>
 
       <div className='contact-form flex center'>
-        <form action=''>
+        <form className='flex column ' action=''>
           <label htmlFor=''>Name</label>
           <input
             type='text'

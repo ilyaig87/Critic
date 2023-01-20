@@ -5,7 +5,7 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const Movies = () => {
   let [movies, setMovies] = useState()
-  console.log(movies)
+  // console.log(movies)
   useEffect(() => {
     loadMovies()
   }, [])

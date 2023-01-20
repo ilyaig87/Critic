@@ -1,4 +1,5 @@
 import { storageService } from './storage.service'
+import { movieCreate } from './movies.data.js'
 
 const API_URL =
   'https://api.themoviedb.org/3/movie/popular?api_key=41b26313fe5f84c44912ea80529a9fd6'
@@ -9,14 +10,19 @@ const API_VIDEO =
 const SEARCH_MOVIE =
   'https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US&page=1&include_adult=false'
 
+// async function getMovies() {
+//   let movies = storageService.loadFromStorage('moviesDB')
+//   if (!movies || movies.length === 0) {
+//     movies = await fetch(API_URL).then((res) => res.json())
+//     movies = movies.results
+//     storageService.saveToStorage('moviesDB', movies)
+//   }
+//   return movies
+// }
+// moviesData
+
 async function getMovies() {
-  let movies = storageService.loadFromStorage('moviesDB')
-  if (!movies || movies.length === 0) {
-    movies = await fetch(API_URL).then((res) => res.json())
-    movies = movies.results
-    storageService.saveToStorage('moviesDB', movies)
-  }
-  return movies
+  return movieCreate.createMovies()
 }
 
 async function getById(movieId) {
@@ -30,6 +36,15 @@ async function getById(movieId) {
   movie.videoKey = videoKey
   return movie
 }
+// saveToArray('myArray')
+// function saveToArray(key) {
+//   let movieArr = storageService.loadFromStorage(key)
+//   let myArrayJson = JSON.stringify(movieArr)
+//   localStorage.setItem('myArray', myArrayJson)
+//   // let myArray = JSON.parse(myArrayJson)
+//   // console.log(myArray)
+//   return myArray
+// }
 
 export const movieService = {
   getMovies,
