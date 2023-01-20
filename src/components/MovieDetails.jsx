@@ -36,7 +36,7 @@ const MovieDetails = () => {
     <div className='container movie-details-container flex center'>
       {movie ? (
         <div className='card-container flex column center'>
-          <h1 className='movie-title'>{movie.title}</h1>
+          <h1 className='movie-title'>{movie.title.substring(0, 25)}</h1>
           <img
             className='card-img'
             src={API_IMG + movie.backdrop_path}

@@ -18,7 +18,7 @@ const Movies = () => {
     <section id='movies'>
       {movies ? (
         <div className='container movies-container'>
-          <h1 className='title flex center'>Our Movies</h1>
+          <h1 className='title flex center'>All Our Movies</h1>
           <div className='movie-container grid'>
             {movies.map((movie) => (
               <div className='movie-card flex center' key={movie.id}>
@@ -27,7 +27,7 @@ const Movies = () => {
                   to={`/movie/${movie.id}`}
                   // to={{ pathname: '/movie/1', state: { id: 1 } }}
                   // onClick={handleShow}
-                  className='btn btn-primary'
+                  className='btn '
                 >
                   Read More
                 </Link>
