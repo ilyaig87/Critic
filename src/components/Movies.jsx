@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
+import MovieFilter from '../views/MovieFilter.jsx'
+
 const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const Movies = () => {
@@ -15,6 +17,8 @@ const Movies = () => {
   }
   return (
     <section id='movies'>
+      <MovieFilter />
+
       {movies ? (
         <div className='container movies-container'>
           <h1 className='title flex center'>Our New Movies</h1>

@@ -10,7 +10,7 @@ const Header = () => {
           <Link
             className='logo-container'
             to={{
-              pathname: `/movies`,
+              pathname: `/`,
             }}
           >
             <h1>

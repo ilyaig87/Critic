@@ -3,6 +3,7 @@ import { movieService } from '../services/movie-service.js'
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import moment from 'moment-timezone'
+import Filter from '../views/MovieFilter.jsx'
 
 const MovieDetails = () => {
   let [movie, setMovie] = useState(null)
@@ -65,7 +66,7 @@ const MovieDetails = () => {
               {showFullText ? 'Read Less' : 'Read More'}
             </button>
             <h5>Movie Release Date: {convertDate(movie.release_date)}</h5>
-            <Link to={`/movies`} className='btn btn-primary'>
+            <Link to={`/`} className='btn btn-primary'>
               Go Back
             </Link>
           </div>

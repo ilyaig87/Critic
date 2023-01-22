@@ -16,8 +16,8 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/movie/:movieId' element={<MovieDetails />} />
-        <Route path='movies/searched-movies' element={<SearchedMovie />} />
-        <Route path='/movies' element={<Movies />} />
+        <Route path='/searched-movies' element={<SearchedMovie />} />
+        <Route path='/' element={<Movies />} />
       </Routes>
       <Footer />
     </div>

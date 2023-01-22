@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import MovieFilter from '../views/MovieFilter'
 
 const SearchResults = () => {
   // use the location hook to access the searchResults
@@ -9,6 +10,7 @@ const SearchResults = () => {
 
   return (
     <section id='searched-movies'>
+      <MovieFilter />
       {searchResults ? (
         <div className='container searched-movies-container'>
           <h1 className='title flex center'>

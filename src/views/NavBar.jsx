@@ -14,7 +14,7 @@ const NavBar = () => {
   async function handleSubmit(e) {
     e.preventDefault()
     const searchResults = await movieService.searchMovies(searchQuery)
-    navigate(`movies/searched-movies`, {
+    navigate(`/searched-movies`, {
       state: { searchResults, searchQuery },
     })
     setSearchQuery('')
