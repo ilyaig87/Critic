@@ -3,10 +3,10 @@ import { movieService } from '../services/movie-service.js'
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import moment from 'moment-timezone'
-const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const MovieDetails = () => {
   let [movie, setMovie] = useState(null)
+  const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
   const [showFullText, setShowFullText] = useState(false)
   const handleReadMore = () => {
@@ -23,7 +23,6 @@ const MovieDetails = () => {
     const { movieId } = params
     movie = await movieService.getById(+movieId)
     setMovie(movie)
-    console.log(movie)
   }
 
   const convertDate = (date) => {
@@ -37,12 +36,21 @@ const MovieDetails = () => {
       {movie ? (
         <div className='card-container flex column center'>
           <h1 className='movie-title'>{movie.title.substring(0, 25)}</h1>
-          <img
-            className='card-img'
-            src={API_IMG + movie.backdrop_path}
-            alt=''
-          />
+          {movie.backdrop_path ? (
+            <img
+              className='card-img'
+              src={API_IMG + movie.backdrop_path}
+              alt=''
+            />
+          ) : (
+            <img
+              className='card-img'
+              src={API_IMG + movie.poster_path}
+              alt=''
+            />
+          )}
           <span>{movie.vote_average}</span>
+          {}
           <div className='movie-video'>
             <h3>Watch the trailer</h3>
             <iframe
@@ -57,7 +65,7 @@ const MovieDetails = () => {
               {showFullText ? 'Read Less' : 'Read More'}
             </button>
             <h5>Movie Release Date: {convertDate(movie.release_date)}</h5>
-            <Link to={`/`} className='btn btn-primary'>
+            <Link to={`/movies`} className='btn btn-primary'>
               Go Back
             </Link>
           </div>

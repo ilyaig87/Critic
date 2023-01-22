@@ -22,13 +22,6 @@
     font-size: large;
   }
 
-  .search-bar {
-    height: 2rem;
-    width: 60%;
-    background: aliceblue;
-    justify-content: space-between;
-  }
-
   input,
   button {
     background: transparent;
@@ -38,9 +31,6 @@
 
 @media screen and (max-width: 1024px) {
   .header-container {
-    .search-bar {
-      width: 14rem;
-    }
     .nav-link {
       gap: 2rem;
     }
@@ -48,9 +38,6 @@
 }
 @media screen and (max-width: 600px) {
   .header-container {
-    .search-bar {
-      width: 10rem;
-    }
     .nav-link {
       gap: 1rem;
     }

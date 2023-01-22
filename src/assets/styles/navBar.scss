@@ -1,0 +1,17 @@
+.search-bar {
+  height: 2rem;
+  width: 60%;
+  background: aliceblue;
+}
+
+@media screen and (max-width: 1024px) {
+  .search-bar {
+    width: 14rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-bar {
+    width: 10rem;
+  }
+}

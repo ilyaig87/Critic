@@ -1,5 +1,5 @@
 import { storageService } from './storage.service'
-import { movieCreate } from './movies.data.js'
+// import { movieCreate } from './movies.data.js'
 
 const API_URL =
   'https://api.themoviedb.org/3/movie/popular?api_key=41b26313fe5f84c44912ea80529a9fd6'
@@ -8,34 +8,55 @@ const API_VIDEO =
   'https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US'
 
 const SEARCH_MOVIE =
-  'https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US&page=1&include_adult=false'
-
-// async function getMovies() {
-//   let movies = storageService.loadFromStorage('moviesDB')
-//   if (!movies || movies.length === 0) {
-//     movies = await fetch(API_URL).then((res) => res.json())
-//     movies = movies.results
-//     storageService.saveToStorage('moviesDB', movies)
-//   }
-//   return movies
-// }
-// moviesData
+  'https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US&page=3&include_adult=false'
 
 async function getMovies() {
-  return movieCreate.createMovies()
+  localStorage.removeItem('searchedMoviesDB')
+
+  let movies = storageService.loadFromStorage('moviesDB')
+  if (!movies || movies.length === 0) {
+    movies = await fetch(API_URL).then((res) => res.json())
+    movies = movies.results
+    storageService.saveToStorage('moviesDB', movies)
+  }
+  return movies
 }
+
+async function searchMovies(searchQuery) {
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&query=${searchQuery}`
+  const res = await fetch(url)
+  const data = await res.json()
+  storageService.saveToStorage('searchedMoviesDB', data.results)
+
+  return data.results
+}
+
+// async function getMovies() {
+//   return movieCreate.createMovies()
+// }
 
 async function getById(movieId) {
   const videoKey = await fetch(API_VIDEO.replace('{movie_id}', movieId))
-    .then((res) => res.json())
-    .then((data) => data.results[0].key)
-
-  const movies = await storageService.loadFromStorage('moviesDB')
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.results.length > 0) {
+        return data.results[0].key
+      } else {
+        console.log('err')
+        return null
+      }
+    })
+  const movies = await storageService.loadFromStorage(
+    localStorage.getItem('searchedMoviesDB') !== null
+      ? 'searchedMoviesDB'
+      : 'moviesDB'
+  )
   const idx = movies.findIndex((movie) => movie.id === +movieId)
   const movie = movies[idx]
   movie.videoKey = videoKey
   return movie
 }
+
 // saveToArray('myArray')
 // function saveToArray(key) {
 //   let movieArr = storageService.loadFromStorage(key)
@@ -49,4 +70,5 @@ async function getById(movieId) {
 export const movieService = {
   getMovies,
   getById,
+  searchMovies,
 }

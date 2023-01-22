@@ -6,13 +6,15 @@ import { AiFillGithub } from 'react-icons/ai'
 const Footer = () => {
   return (
     <footer className='footer-container'>
-      <a href='#' className='footer-logo '>
-        <h1>Critic</h1>
+      <a href='#/movies' className='footer-logo '>
+        <h1>
+          Critic<span className='dot-logo'>.</span>
+        </h1>
       </a>
 
       <ul className='footer-links flex'>
         <li>
-          <a href='#'>Home</a>
+          <a href='#/movies'>Home</a>
         </li>
         <li>
           <a href='#/about'>About</a>
@@ -23,13 +25,13 @@ const Footer = () => {
       </ul>
 
       <div className='footer-socials flex'>
-        <a href='https://github.com' target='_blank'>
+        <a href='https://github.com' rel='noreferrer' target='_blank'>
           <AiFillGithub />
         </a>
-        <a href='https://www.linkedin.com' target='_blank'>
+        <a href='https://www.linkedin.com' rel='noreferrer' target='_blank'>
           <BsLinkedin />
         </a>
-        <a href='https://www.facebook.com' target='_blank'>
+        <a href='https://www.facebook.com' rel='noreferrer' target='_blank'>
           <FaFacebook />
         </a>
       </div>

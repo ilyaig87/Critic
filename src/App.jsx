@@ -6,6 +6,7 @@ import Header from '../src/views/Header'
 import MovieDetails from './components/MovieDetails'
 import Movies from './components/Movies'
 import Footer from './views/Footer'
+import SearchedMovie from './components/SearchedMovie'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
         <Route path='/movie/:movieId' element={<MovieDetails />} />
-        <Route path='/' element={<Movies />} />
+        <Route path='movies/searched-movies' element={<SearchedMovie />} />
+        <Route path='/movies' element={<Movies />} />
       </Routes>
       <Footer />
     </div>

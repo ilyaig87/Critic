@@ -1,0 +1,69 @@
+.searched-movies-container {
+  .searched-movie-container {
+    grid-template-columns: repeat(4, 1fr);
+    font-family: 'Poppins';
+    gap: 2rem;
+
+    .searched-movie-card {
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--color-primary-variant);
+      flex-direction: column;
+      border-radius: 2rem;
+      color: var(--color-light1);
+      -webkit-transition: background-color 2s ease-out;
+      -moz-transition: background-color 2s ease-out;
+      -o-transition: background-color 2s ease-out;
+      transition: background-color 2s ease-out;
+
+      img {
+        border-radius: 1rem;
+      }
+    }
+
+    .searched-movie-card > h2 {
+      padding: 1rem;
+      height: 8rem;
+      font-size: medium;
+      transition: height 0.2s;
+    }
+
+    .searched-movie-card:hover {
+      color: var(--color-white);
+      background: var(--color-bg);
+    }
+
+    .searched-movie-card > .btn-primary {
+      margin-top: 1rem;
+    }
+  }
+  .title {
+    color: var(--color-light);
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+}
+@media (max-width: 1024px) {
+  .searched-movies-container {
+    .searched-movie-container {
+      grid-template-columns: repeat(3, 1fr);
+
+      .title {
+        font-size: 2rem;
+      }
+      .searched-movie-container > h2 {
+        padding: 0;
+      }
+    }
+  }
+}
+@media (max-width: 600px) {
+  .searched-movies-container {
+    .searched-movie-container {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .title {
+      font-size: 1.5rem;
+    }
+  }
+}

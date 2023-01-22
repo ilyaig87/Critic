@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { IoIosSearch } from 'react-icons/io'
 import '../../src/assets/styles/header.scss'
+import NavBar from './NavBar'
 
 const Header = () => {
   return (
@@ -10,18 +10,15 @@ const Header = () => {
           <Link
             className='logo-container'
             to={{
-              pathname: `/`,
+              pathname: `/movies`,
             }}
           >
-            <h1>Critic</h1>
+            <h1>
+              Critic<span className='dot-logo'>.</span>
+            </h1>
           </Link>
 
-          <div className='search-bar flex'>
-            <input type='text' placeholder='Search your movie...' />
-            <button className='search-bar-btn'>
-              <IoIosSearch className='svg' />
-            </button>
-          </div>
+          <NavBar />
 
           <div className='nav-link flex'>
             <Link

@@ -5,7 +5,6 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const Movies = () => {
   let [movies, setMovies] = useState()
-  // console.log(movies)
   useEffect(() => {
     loadMovies()
   }, [])
@@ -18,17 +17,12 @@ const Movies = () => {
     <section id='movies'>
       {movies ? (
         <div className='container movies-container'>
-          <h1 className='title flex center'>All Our Movies</h1>
+          <h1 className='title flex center'>Our New Movies</h1>
           <div className='movie-container grid'>
             {movies.map((movie) => (
               <div className='movie-card flex center' key={movie.id}>
                 <img src={API_IMG + movie.poster_path} alt={movie.title} />
-                <Link
-                  to={`/movie/${movie.id}`}
-                  // to={{ pathname: '/movie/1', state: { id: 1 } }}
-                  // onClick={handleShow}
-                  className='btn '
-                >
+                <Link to={`/movie/${movie.id}`} className='btn '>
                   Read More
                 </Link>
               </div>
