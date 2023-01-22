@@ -24,13 +24,14 @@ const NavBar = () => {
     <div className='search-bar'>
       <form onSubmit={handleSubmit} value={searchQuery}>
         <input
+          className=' '
           type='text'
           value={searchQuery}
           placeholder='Search your movie...'
           onChange={handleChange}
         />
 
-        <button className=''>
+        <button>
           <IoIosSearch className='svg' />
         </button>
       </form>

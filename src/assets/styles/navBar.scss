@@ -2,16 +2,23 @@
   height: 2rem;
   width: 60%;
   background: aliceblue;
+
+  input {
+    width: 95%;
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .search-bar {
     width: 14rem;
+
+    input {
+      width: 90%;
+    }
   }
 }
-
 @media screen and (max-width: 600px) {
   .search-bar {
-    width: 10rem;
+    width: 15rem;
   }
 }
