@@ -5,7 +5,7 @@ export class MovieFilter extends React.Component {
     filterBy: {
       movieTitle: '',
       rate: '',
-      // releaseDate: '',
+      releaseDate: '',
     },
   }
 
@@ -53,15 +53,15 @@ export class MovieFilter extends React.Component {
               onChange={this.handleChange}
             />
 
-            {/* <label htmlFor='by-release-date'>Release Date :</label>
+            <label htmlFor='by-release-date'>Release Date :</label>
             <input
               type='number'
               placeholder='by release-date..'
               id='by-release-date'
-              name='release-date'
+              name='releaseDate'
               // value={maxSpeed}
               onChange={this.handleChange}
-            /> */}
+            />
 
             <button className='btn'>Filter!</button>
           </form>

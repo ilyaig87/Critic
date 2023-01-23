@@ -3,7 +3,6 @@ import { movieService } from '../services/movie-service.js'
 import { Link, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import moment from 'moment-timezone'
-import Filter from '../views/MovieFilter.jsx'
 
 const MovieDetails = () => {
   let [movie, setMovie] = useState(null)

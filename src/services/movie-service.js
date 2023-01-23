@@ -8,7 +8,7 @@ const API_VIDEO =
   'https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US'
 
 const SEARCH_MOVIE =
-  'https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US&page=3&include_adult=false'
+  'https://api.themoviedb.org/3/search/movie?api_key=41b26313fe5f84c44912ea80529a9fd6&language=en-US&page=10&include_adult=false'
 
 async function getMovies() {
   localStorage.removeItem('searchedMoviesDB')
@@ -57,6 +57,29 @@ async function getById(movieId) {
   return movie
 }
 
+async function query(filterBy) {
+  console.log(filterBy)
+  let movies = await storageService.loadFromStorage('moviesDB')
+
+  if (filterBy) {
+    // filter by genre
+    if (filterBy.genre) {
+      movies = movies.filter((movie) =>
+        movie.genre_ids.includes(filterBy.genre)
+      )
+    }
+
+    // filter by release year
+    if (filterBy.year) {
+      movies = movies.filter(
+        (movie) => new Date(movie.release_date).getFullYear() === filterBy.year
+      )
+    }
+  }
+
+  return movies
+}
+
 // saveToArray('myArray')
 // function saveToArray(key) {
 //   let movieArr = storageService.loadFromStorage(key)
@@ -71,4 +94,5 @@ export const movieService = {
   getMovies,
   getById,
   searchMovies,
+  query,
 }
