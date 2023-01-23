@@ -6,7 +6,7 @@ import { AiFillGithub } from 'react-icons/ai'
 const Footer = () => {
   return (
     <footer className='footer-container'>
-      <a href='#/' className='footer-logo '>
+      <a href='#' className='footer-logo '>
         <h1>
           Critic<span className='dot-logo'>.</span>
         </h1>
@@ -14,8 +14,12 @@ const Footer = () => {
 
       <ul className='footer-links flex'>
         <li>
-          <a href='#/'>Home</a>
+          <a href='#'>Home</a>
         </li>
+        <li>
+          <a href='#/tv-shows'>Tv Shows</a>
+        </li>
+
         <li>
           <a href='#/about'>About</a>
         </li>

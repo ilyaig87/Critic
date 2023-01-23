@@ -6,11 +6,12 @@ const SearchResults = () => {
   // use the location hook to access the searchResults
   const location = useLocation()
   const searchResults = location.state.searchResults
+  console.log(searchResults)
   const searchQuery = location.state.searchQuery
 
   return (
     <section id='searched-movies'>
-      <MovieFilter />
+      {/* <MovieFilter /> */}
       {searchResults ? (
         <div className='container searched-movies-container'>
           <h1 className='title flex center'>
@@ -19,7 +20,7 @@ const SearchResults = () => {
           <div className='searched-movie-container grid'>
             {searchResults.map((result) => (
               <div key={result.id} className='searched-movie-card flex center'>
-                <h5>{result.title.substring(0, 18) + '...'}</h5>
+                <h5>{result.name}</h5>
                 {result.poster_path ? (
                   <img
                     alt={result.title}

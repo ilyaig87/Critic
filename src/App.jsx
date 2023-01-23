@@ -7,6 +7,8 @@ import MovieDetails from './components/MovieDetails'
 import Movies from './components/Movies'
 import Footer from './views/Footer'
 import SearchedMovie from './components/SearchedMovie'
+import TvShows from './components/TvShows'
+import TvShowsDetails from './components/TvShowsDetails'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path='/about' element={<About />} />
         <Route path='/movie/:movieId' element={<MovieDetails />} />
         <Route path='/searched-movies' element={<SearchedMovie />} />
+        <Route path='/tv-show/:tvShowId' element={<TvShowsDetails />} />
+        <Route path='/tv-shows' element={<TvShows />} />
         <Route path='/' element={<Movies />} />
       </Routes>
       <Footer />

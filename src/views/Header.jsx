@@ -30,6 +30,13 @@ const Header = () => {
             </Link>
             <Link
               to={{
+                pathname: `/tv-shows`,
+              }}
+            >
+              Tv
+            </Link>
+            <Link
+              to={{
                 pathname: `/contact`,
               }}
             >

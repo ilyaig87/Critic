@@ -8,6 +8,7 @@ export class MovieFilter extends React.Component {
       releaseDate: '',
     },
   }
+  inputRef = React.createRef()
 
   handleChange = ({ target }) => {
     const field = target.name
@@ -21,14 +22,14 @@ export class MovieFilter extends React.Component {
         },
       }),
       () => {
-        // this.props.onSetFilter(this.state.filterBy)
+        this.props.onSetFilter(this.state.filterBy)
       }
     )
   }
 
   onFilter = (ev) => {
     ev.preventDefault()
-    // this.props.onSetFilter(this.state.filterBy)
+    this.props.onSetFilter(this.state.filterBy)
   }
   render() {
     return (
