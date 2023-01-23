@@ -5,8 +5,8 @@ import MovieFilter from '../views/MovieFilter'
 const SearchResults = () => {
   // use the location hook to access the searchResults
   const location = useLocation()
+  console.log(location)
   const searchResults = location.state.searchResults
-  console.log(searchResults)
   const searchQuery = location.state.searchQuery
 
   return (
@@ -20,7 +20,7 @@ const SearchResults = () => {
           <div className='searched-movie-container grid'>
             {searchResults.map((result) => (
               <div key={result.id} className='searched-movie-card flex center'>
-                <h5>{result.name}</h5>
+                <h5>{result.title}</h5>
                 {result.poster_path ? (
                   <img
                     alt={result.title}

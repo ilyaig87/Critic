@@ -1,20 +1,23 @@
 import { storageService } from './storage.service'
 // import { movieCreate } from './movies.data.js'
-// require('dotenv').config()
-console.log(process.env.API_KEY)
-const API_URL1 = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`
 
-const API_TV = `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.API_KEY}&language=en-US&page=1`
-const API_TV_SHOW_VIDEO = `https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=${process.env.API_KEY}&language=en-US`
+const API_URL1 = `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
+const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`
+const API_TV_SHOW_VIDEO = `https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+const API_MOVIE_VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+const SEARCH_MOVIE = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}`
 
-const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`
-
-const API_MOVIE_VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${process.env.API_KEY}&language=en-US`
-
-const SEARCH_MOVIE = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY}`
-
+// console.log(API_URL)
+export const movieService = {
+  getMovies,
+  getById,
+  searchAll,
+  query,
+  getTvShows,
+  getById1,
+}
 async function getMovies() {
-  localStorage.removeItem('searchedMoviesDB')
+  localStorage.removeItem('searchedAllDB')
 
   let movies = storageService.loadFromStorage('moviesDB')
   if (!movies || movies.length === 0) {
@@ -26,29 +29,30 @@ async function getMovies() {
 }
 
 async function getTvShows() {
-  localStorage.removeItem('searchedTvShowsDB')
+  localStorage.removeItem('searchedAllDB')
 
   let tvShows = storageService.loadFromStorage('tvShowsDB')
   if (!tvShows || tvShows.length === 0) {
-    tvShows = await fetch(API_TV).then((res) => res.json())
+    tvShows = await fetch(API_URL1).then((res) => res.json())
     tvShows = tvShows.results
     storageService.saveToStorage('tvShowsDB', tvShows)
   }
   return tvShows
 }
 
-async function searchMovies(searchQuery) {
-  const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.API_KEY}&query=${searchQuery}`
+async function searchAll(searchQuery, selectedMediaType) {
+  let url = ''
+  if (selectedMediaType === 'movie') {
+    console.log(selectedMediaType)
+    url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
+  } else if (selectedMediaType === 'tv') {
+    console.log(selectedMediaType)
+    url = `https://api.themoviedb.org/3/search/tv?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
+  }
   const res = await fetch(url)
   const data = await res.json()
-  storageService.saveToStorage('searchedMoviesDB', data.results)
-
   return data.results
 }
-
-// async function getMovies() {
-//   return movieCreate.createMovies()
-// }
 
 async function getById(movieId) {
   const videoKey = await fetch(API_MOVIE_VIDEO.replace('{movie_id}', movieId))
@@ -62,8 +66,8 @@ async function getById(movieId) {
       }
     })
   const movies = await storageService.loadFromStorage(
-    localStorage.getItem('searchedMoviesDB') !== null
-      ? 'searchedMoviesDB'
+    localStorage.getItem('searchedAllDB') !== null
+      ? 'searchedAllDB'
       : 'moviesDB'
   )
   const idx = movies.findIndex((movie) => movie.id === +movieId)
@@ -84,8 +88,8 @@ async function getById1(tvShowId) {
       }
     })
   const tvShows = await storageService.loadFromStorage(
-    localStorage.getItem('searchedTvShowDB') !== null
-      ? 'searchedTvShowDB'
+    localStorage.getItem('searchedAllDB') !== null
+      ? 'searchedAllDB'
       : 'tvShowsDB'
   )
   const idx = tvShows.findIndex((tvShow) => tvShow.id === +tvShowId)
@@ -117,21 +121,15 @@ async function query(filterBy) {
   return movies
 }
 
-// saveToArray('myArray')
-// function saveToArray(key) {
-//   let movieArr = storageService.loadFromStorage(key)
-//   let myArrayJson = JSON.stringify(movieArr)
-//   localStorage.setItem('myArray', myArrayJson)
-//   // let myArray = JSON.parse(myArrayJson)
-//   // console.log(myArray)
-//   return myArray
+// async function searchMovies(searchQuery) {
+//   const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
+//   const res = await fetch(url)
+//   const data = await res.json()
+//   storageService.saveToStorage('searchedMoviesDB', data.results)
+
+//   return data.results
 // }
 
-export const movieService = {
-  getMovies,
-  getById,
-  searchMovies,
-  query,
-  getTvShows,
-  getById1,
-}
+// async function getMovies() {
+//   return movieCreate.createMovies()
+// }

@@ -1,28 +1,34 @@
 import React from 'react'
 import { useState } from 'react'
 import { IoIosSearch } from 'react-icons/io'
+import { Navigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service'
-import { useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
-  const navigate = useNavigate()
+  const [selectedMediaType, setSelectedMediaType] = useState('')
+
+  const [searchResults, setSearchResults] = useState([])
+
+  const handleMediaTypeSelection = (e) => {
+    setSelectedMediaType(e.target.value)
+  }
+
+  const handleSearch = async (searchQuery, selectedMediaType) => {
+    const results = await movieService.searchAll(searchQuery, selectedMediaType)
+    setSearchResults(results)
+    Navigate('/search-results', {
+      state: { searchResults: results, searchQuery },
+    })
+  }
+
   const [searchQuery, setSearchQuery] = useState([])
   const handleChange = (e) => {
     setSearchQuery(e.target.value)
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-    const searchResults = await movieService.searchMovies(searchQuery)
-    navigate(`/searched-movies`, {
-      state: { searchResults, searchQuery },
-    })
-    setSearchQuery('')
-  }
-
   return (
-    <div className='search-bar'>
-      <form onSubmit={handleSubmit} value={searchQuery}>
+    <div className='search-bar flex'>
+      <form onSubmit={(e) => handleSearch(e, searchQuery, selectedMediaType)}>
         <input
           className=' '
           type='text'
@@ -30,6 +36,11 @@ const NavBar = () => {
           placeholder='Search your movie...'
           onChange={handleChange}
         />
+        <select onChange={handleMediaTypeSelection}>
+          <option value=''>Select Media Type</option>
+          <option value='movie'>Movie</option>
+          <option value='tv'>TV Show</option>
+        </select>
 
         <button>
           <IoIosSearch className='svg' />

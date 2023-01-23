@@ -6,7 +6,6 @@ import moment from 'moment-timezone'
 
 const TvShowsDetails = () => {
   let [tvShow, setTvShow] = useState(null)
-  console.log(tvShow)
   const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
   const [showFullText, setShowFullText] = useState(false)

@@ -6,6 +6,7 @@ import moment from 'moment-timezone'
 
 const MovieDetails = () => {
   let [movie, setMovie] = useState(null)
+  console.log(movie)
   const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
   const [showFullText, setShowFullText] = useState(false)
