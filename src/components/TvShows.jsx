@@ -7,7 +7,7 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const TvShows = () => {
   let [tvShows, setTvShows] = useState()
-
+  console.log(tvShows)
   useEffect(() => {
     loadTvShows()
   }, [])
@@ -25,14 +25,25 @@ const TvShows = () => {
         <div className='container movies-container'>
           <h1 className='title flex center'>Our New Movies</h1>
           <div className='movie-container grid'>
-            {tvShows.map((tVShow) => (
-              <div className='movie-card flex center' key={tVShow.id}>
-                <img src={API_IMG + tVShow.poster_path} alt={tVShow.title} />
-                <Link to={`/show/${tVShow.id}`} className='btn ' state={tVShow}>
-                  Read More
-                </Link>
-              </div>
-            ))}
+            {tvShows.map((tVShow) => {
+              if (tVShow.poster_path) {
+                return (
+                  <div className='movie-card flex center' key={tVShow.id}>
+                    <img
+                      src={API_IMG + tVShow.poster_path}
+                      alt={tVShow.title}
+                    />
+                    <Link
+                      to={`/show/${tVShow.id}`}
+                      className='btn '
+                      state={tVShow}
+                    >
+                      Read More
+                    </Link>
+                  </div>
+                )
+              }
+            })}
           </div>
         </div>
       ) : (
