@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import '../../src/assets/styles/header.scss'
-import NavBar from './NavBar'
+import NavBar from '../views/NavBar.jsx'
 
 const Header = () => {
   return (

@@ -1,0 +1,6 @@
+export { default as SearchResults } from './SearchResults.jsx'
+export { default as MediaDetails } from './MediaDetails.jsx'
+export { default as Movies } from './Movies.jsx'
+export { default as TvShows } from './TvShows.jsx'
+export { default as Contact } from './Contact.jsx'
+export { default as About } from './About.jsx'
