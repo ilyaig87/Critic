@@ -28,7 +28,7 @@ const TvShows = () => {
             {tvShows.map((tVShow) => (
               <div className='movie-card flex center' key={tVShow.id}>
                 <img src={API_IMG + tVShow.poster_path} alt={tVShow.title} />
-                <Link to={`/tv-show/${tVShow.id}`} className='btn '>
+                <Link to={`/show/${tVShow.id}`} className='btn ' state={tVShow}>
                   Read More
                 </Link>
               </div>

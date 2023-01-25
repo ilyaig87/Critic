@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 import MovieFilter from '../views/MovieFilter.jsx'
+import MediaDetails from './MediaDetails.jsx'
 
 const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
@@ -68,7 +69,6 @@ const Movies = () => {
   return (
     <section id='movies'>
       {/* <MovieFilter /> */}
-
       {movies ? (
         <div className='container movies-container'>
           <h1 className='title flex center'>Our New Movies</h1>
@@ -76,7 +76,7 @@ const Movies = () => {
             {movies.map((movie) => (
               <div className='movie-card flex center' key={movie.id}>
                 <img src={API_IMG + movie.poster_path} alt={movie.title} />
-                <Link to={`/movie/${movie.id}`} className='btn '>
+                <Link to={`/show/${movie.id}`} className='btn ' state={movie}>
                   Read More
                 </Link>
               </div>
