@@ -7,31 +7,16 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const MediaDetails = () => {
   const location = useLocation()
-  // const mediaType = location.state?.mediaType
-  // const media = location.state?.media
-  const media = location.state
-  console.log(location.state)
-
-  const [setMedia] = useState(null)
+  const [media, setMedia] = useState(null)
   const [showFullText, setShowFullText] = useState(false)
   const handleReadMore = () => {
     setShowFullText(!showFullText)
   }
 
-  const params = useParams()
   useEffect(() => {
-    switch (params.mediaType) {
-      case 'movie':
-        movieService
-          .getByMovieId(+params.mediaId)
-          .then((data) => setMedia(data))
-        break
-      case 'tv':
-        movieService.getByShowId(+params.mediaId).then((data) => setMedia(data))
-        break
-      default:
-        break
-    }
+    movieService
+      .getMediaById(+location.state.id, location.state)
+      .then((data) => setMedia(data))
   }, [])
 
   const convertDate = (date) => {
@@ -65,9 +50,13 @@ const MediaDetails = () => {
           <span>{media.vote_average}</span>
           <div className='movie-video'>
             <h3>Watch the trailer</h3>
-            <iframe
-              src={`https://www.youtube.com/embed/${media.videoKey}`}
-            ></iframe>
+            {media.videoKey ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${media.videoKey}`}
+              ></iframe>
+            ) : (
+              <p className='no-video'>Can't Load The Video</p>
+            )}
           </div>
           <div className='movie-text'>
             <p className={`${!showFullText ? 'limited-lines' : ''}`}>

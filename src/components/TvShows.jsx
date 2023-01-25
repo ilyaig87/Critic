@@ -7,7 +7,7 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const TvShows = () => {
   let [tvShows, setTvShows] = useState()
-  console.log(tvShows)
+  // console.log(tvShows)
   useEffect(() => {
     loadTvShows()
   }, [])

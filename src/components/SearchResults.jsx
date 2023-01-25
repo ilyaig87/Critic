@@ -6,7 +6,7 @@ const SearchResults = () => {
   const location = useLocation()
   const searchResults = location.state?.searchResults || []
   const searchQuery = location.state?.searchQuery || ''
-
+  console.log(searchResults)
   return (
     <section id='searched-movies'>
       {/* <MovieFilter /> */}
@@ -17,20 +17,23 @@ const SearchResults = () => {
         <div className='searched-movie-container grid'>
           {searchResults.map((result) => (
             <div key={result.id} className='searched-movie-card flex center'>
-              {/* <h5>{result.title}</h5> */}
+              <small>{result.title}</small>
               {result.poster_path ? (
                 <img
                   alt={result.title}
                   src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
                 />
               ) : (
-                <p>{result.originalTitle}</p>
+                <div>
+                  <small>{result.name}</small>
+                  <p>Can't Load The Video</p>
+                </div>
               )}
 
               <Link
                 to={{
                   pathname: `/show/${result.id}`,
-                  state: { mediaType: 'show', media: result },
+                  state: { mediaType: result.media_type, media: result },
                 }}
                 className='btn '
               >

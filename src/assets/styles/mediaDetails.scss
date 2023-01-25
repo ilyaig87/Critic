@@ -47,7 +47,12 @@
     height: 350px;
     padding: 2rem;
   }
-
+  .no-video {
+    color: red;
+    width: 500px;
+    height: 4em;
+    padding: 2rem;
+  }
   h5 {
     padding: 0.5rem;
     color: var(--color-light);
