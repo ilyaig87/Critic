@@ -7,9 +7,10 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const MediaDetails = () => {
   const location = useLocation()
-  console.log(location)
-  const mediaType = location.state?.mediaType
-  const media = location.state?.media
+  // const mediaType = location.state?.mediaType
+  // const media = location.state?.media
+  const media = location.state
+  console.log(location.state)
 
   const [setMedia] = useState(null)
   const [showFullText, setShowFullText] = useState(false)
@@ -43,7 +44,11 @@ const MediaDetails = () => {
     <div className='container movie-details-container flex center'>
       {media ? (
         <div className='card-container flex column center'>
-          <h1 className='movie-title'>{media.title.substring(0, 25)}</h1>
+          {media.name ? (
+            <h1 className='movie-title'>{media.name.substring(0, 25)}</h1>
+          ) : (
+            <h1 className='movie-title'>{media.title.substring(0, 25)}</h1>
+          )}
           {media.backdrop_path ? (
             <img
               className='card-img'
