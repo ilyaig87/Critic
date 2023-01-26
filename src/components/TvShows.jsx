@@ -1,16 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 // import MovieFilter from '../views/MovieFilter.jsx'
 
 const API_IMG = 'https://image.tmdb.org/t/p/w500'
 
 const TvShows = () => {
+  const navigate = useNavigate()
   let [tvShows, setTvShows] = useState()
   // console.log(tvShows)
   useEffect(() => {
     loadTvShows()
   }, [])
+
+  const handleReadMore = (result) => {
+    navigate(`/show/${result.id}`, {
+      state: {
+        media: result,
+        fromSearch: false,
+      },
+    })
+  }
 
   async function loadTvShows() {
     tvShows = await movieService.getTvShows()
@@ -33,13 +43,12 @@ const TvShows = () => {
                       src={API_IMG + tVShow.poster_path}
                       alt={tVShow.title}
                     />
-                    <Link
-                      to={`/show/${tVShow.id}`}
-                      className='btn '
-                      state={tVShow}
+                    <button
+                      className='btn'
+                      onClick={() => handleReadMore(tVShow)}
                     >
                       Read More
-                    </Link>
+                    </button>
                   </div>
                 )
               }

@@ -13,9 +13,11 @@ const MediaDetails = () => {
     setShowFullText(!showFullText)
   }
 
+  const { id } = useParams()
+
   useEffect(() => {
     movieService
-      .getMediaById(+location.state.id, location.state)
+      .getMediaById(+id, location.state.media, location.state.fromSearch)
       .then((data) => setMedia(data))
   }, [])
 

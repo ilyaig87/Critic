@@ -1,5 +1,4 @@
 import { storageService } from './storage.service'
-// import { movieCreate } from './movies.data.js'
 const API_URL1 = `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
 const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`
 const API_TV_SHOW_VIDEO = `https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
@@ -12,10 +11,6 @@ export const movieService = {
   getTvShows,
   searchAll,
   getMediaById,
-  // searchMovies,
-  // searchTvShows,
-  // getByShowId,
-  // getByMovieId,
 }
 
 async function getMovies() {
@@ -56,135 +51,34 @@ async function getTvShows() {
   return tvShows
 }
 
-// async function searchTvShows(searchQuery) {
-//   const url = `https://api.themoviedb.org/3/search/tv?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
-//   try {
-//     const res = await fetch(url)
-//     if (!res.ok) {
-//       throw new Error(res.statusText)
-//     }
-//     const data = await res.json()
-//     storageService.saveToStorage('searchedTvShowsDB', data.results)
-//     return data.results
-//   } catch (error) {
-//     console.error(error)
-//     return []
-//   }
-// }
-
-// async function searchMovies(searchQuery) {
-//   const url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
-//   try {
-//     const res = await fetch(url)
-//     if (!res.ok) {
-//       throw new Error(res.statusText)
-//     }
-//     const data = await res.json()
-//     storageService.saveToStorage('searchedMoviesDB', data.results)
-//     return data.results
-//   } catch (error) {
-//     console.error(error)
-//     return []
-//   }
-// }
-
-// async function getMovies() {
-//   return movieCreate.createMovies()
-// }
-
-// async function getById(movieId) {
-//   const videoKey = await fetch(API_MOVIE_VIDEO.replace('{movie_id}', movieId))
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.results.length > 0) {
-//         return data.results[0].key
-//       } else {
-//         console.log('err')
-//         return null
-//       }
-//     })
-//   const movies = await storageService.loadFromStorage(
-//     localStorage.getItem('searchedMoviesDB') !== null
-//       ? 'searchedMoviesDB'
-//       : 'moviesDB'
-//   )
-//   const idx = movies.findIndex((movie) => movie.id === +movieId)
-//   const movie = movies[idx]
-//   movie.videoKey = videoKey
-//   return movie
-// }
-
-// async function getByShowId(tvShowId) {
-//   const videoKey = await fetch(API_TV_SHOW_VIDEO.replace('{tv_id}', tvShowId))
-//     .then((response) => response.json())
-//     .then((data) => {
-//       if (data.results.length > 0) {
-//         return data.results[0].key
-//       } else {
-//         console.log('err')
-//         return null
-//       }
-//     })
-//   const tvShows = await storageService.loadFromStorage(
-//     localStorage.getItem('searchedTvShowDB') !== null
-//       ? 'searchedTvShowDB'
-//       : 'tvShowsDB'
-//   )
-//   const idx = tvShows.findIndex((tvShow) => tvShow.id === +tvShowId)
-
-//   const tvShow = tvShows[idx]
-//   tvShow.genre = 'tv'
-//   tvShow.videoKey = videoKey
-//   return tvShow
-// }
-
-// async function getByMovieId(movieId) {
-//   const url = API_MOVIE_VIDEO.replace('{movie_id}', movieId)
-//   try {
-//     const res = await fetch(url)
-//     if (!res.ok) {
-//       throw new Error(res.statusText)
-//     }
-//     const data = await res.json()
-//     if (data.results.length === 0) {
-//       return null
-//     }
-//     if (null) {
-//     }
-//     const videoKey = data.results[0].key
-//     console.log(videoKey)
-//     let movies = storageService.loadFromStorage(
-//       localStorage.getItem('searchedMoviesDB') !== null
-//         ? 'searchedMoviesDB'
-//         : 'moviesDB'
-//     )
-//     const idx = movies.findIndex((movie) => movie.id === +movieId)
-//     if (idx === -1) {
-//       return null
-//     }
-//     const movie = movies[idx]
-//     movie.videoKey = videoKey
-//     movie.genre = 'movie'
-//     return movie
-//   } catch (error) {
-//     console.error(error)
-//     return null
-//   }
-// }
-
-async function getMediaById(mediaId, show) {
-  localStorage.removeItem('searchedTvShowDB')
+async function getMediaById(mediaId, show, fromSearch) {
+  console.log(show.media_type)
   let url, data, genre
-  if (show.first_air_date) {
-    localStorage.removeItem('searchedTvShowDB')
-    url = API_TV_SHOW_VIDEO.replace('{tv_id}', mediaId)
+  if (fromSearch) {
+    data = await storageService.loadFromStorage('searchedDB')
+    if (show.media_type === 'tv') {
+      url = API_TV_SHOW_VIDEO.replace('{tv_id}', mediaId)
+      genre = 'tv'
+    } else {
+      url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
+      genre = 'movie'
+    }
+  } else if (show.first_air_date) {
     data = await storageService.loadFromStorage('tvShowsDB')
+    url = API_TV_SHOW_VIDEO.replace('{tv_id}', mediaId)
     genre = 'tv'
   } else {
-    url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
     data = await storageService.loadFromStorage('moviesDB')
+    url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
     genre = 'movie'
   }
+  // if (fromSearch || show.media_type === 'tv' || show.first_air_date) {
+  //   genre = 'tv'
+  // } else {
+  // url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
+  //   data = await storageService.loadFromStorage('searchedDB')
+  //   genre = 'movie'
+  // }
   const videoKey = await fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -195,17 +89,13 @@ async function getMediaById(mediaId, show) {
         return null
       }
     })
-  console.log(data)
   const idx = data.findIndex((media) => media.id === mediaId)
-  console.log(idx)
   if (idx === -1) {
     return null
   }
   const media = data[idx]
-  console.log(media)
   media.videoKey = videoKey
   media.genre = genre
-  console.log(media)
   return media
 }
 
@@ -246,7 +136,7 @@ async function searchAll(searchQuery) {
     if (!data.results || data.results.length === 0) {
       throw new Error('No Data Found')
     }
-    storageService.saveToStorage('searchedMoviesDB', data.results)
+    storageService.saveToStorage('searchedDB', data.results)
     return data.results
   } catch (error) {
     console.error(error)

@@ -1,12 +1,23 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import MovieFilter from '../views/MovieFilter'
+import { useNavigate } from 'react-router-dom'
 
 const SearchResults = () => {
+  const navigate = useNavigate()
   const location = useLocation()
   const searchResults = location.state?.searchResults || []
   const searchQuery = location.state?.searchQuery || ''
-  console.log(searchResults)
+
+  const handleReadMore = (result) => {
+    navigate(`/show/${result.id}`, {
+      state: {
+        media: result,
+        fromSearch: true,
+      },
+    })
+  }
+
   return (
     <section id='searched-movies'>
       {/* <MovieFilter /> */}
@@ -30,15 +41,9 @@ const SearchResults = () => {
                 </div>
               )}
 
-              <Link
-                to={{
-                  pathname: `/show/${result.id}`,
-                  state: { mediaType: result.media_type, media: result },
-                }}
-                className='btn '
-              >
+              <button className='btn' onClick={() => handleReadMore(result)}>
                 Read More
-              </Link>
+              </button>
             </div>
           ))}
         </div>
