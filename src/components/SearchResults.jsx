@@ -1,6 +1,5 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import MovieFilter from '../views/MovieFilter'
+import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 const SearchResults = () => {
@@ -17,7 +16,6 @@ const SearchResults = () => {
       },
     })
   }
-
   return (
     <section id='searched-movies'>
       {/* <MovieFilter /> */}
@@ -29,6 +27,8 @@ const SearchResults = () => {
           {searchResults.map((result) => (
             <div key={result.id} className='searched-movie-card flex center'>
               <small>{result.title}</small>
+
+              <small>{result.name}</small>
               {result.poster_path ? (
                 <img
                   alt={result.title}
@@ -36,9 +36,14 @@ const SearchResults = () => {
                 />
               ) : (
                 <div>
-                  <small>{result.name}</small>
+                  <img src='../assets/images/no-photo.png' alt='' />
                   <p>Can't Load The Video</p>
                 </div>
+              )}
+              {result.vote_average ? (
+                <small>Rate:{result.vote_average}</small>
+              ) : (
+                ''
               )}
 
               <button className='btn' onClick={() => handleReadMore(result)}>

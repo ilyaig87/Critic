@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { IoIosSearch } from 'react-icons/io'
-import { Navigate, useHistory, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service'
 
-const NavBar = () => {
+const SearchBar = () => {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState([])
-  const [selectedMediaType, setSelectedMediaType] = useState('')
 
   const handleChange = (e) => {
     setSearchQuery(e.target.value)
   }
 
   const handleSearch = async (searchQuery) => {
+    console.log(searchQuery)
     const results = await movieService.searchAll(searchQuery)
-    results.forEach((result) => (result.media_type = result.media_type))
     setSearchResults(results)
     navigate('/searched-movies', {
-      state: { searchResults: results, searchQuery },
+      state: { searchResults, searchQuery },
     })
   }
 
@@ -48,4 +47,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default SearchBar

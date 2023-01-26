@@ -43,6 +43,7 @@ const TvShows = () => {
                       src={API_IMG + tVShow.poster_path}
                       alt={tVShow.title}
                     />
+                    <small>Rate:{tVShow.vote_average}</small>
                     <button
                       className='btn'
                       onClick={() => handleReadMore(tVShow)}

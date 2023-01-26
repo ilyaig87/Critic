@@ -6,10 +6,10 @@ const Contact = () => {
   return (
     <div className='container contact-container flex column center'>
       <div className='contact-title '>
-        <h1>Contact</h1>
+        <h1>CONTACT</h1>
       </div>
 
-      <div className='contact-form flex center'>
+      <div className='contact-form '>
         <form className='flex column ' action=''>
           <label htmlFor=''>Name</label>
           <input
@@ -26,7 +26,12 @@ const Contact = () => {
             placeholder='Enter your email'
           ></input>
           <label htmlFor='message'>Message</label>
-          <textarea className='form-control' id='message' rows='3'></textarea>
+          <textarea
+            className='form-control'
+            id='message'
+            rows='3'
+            placeholder='Your message...'
+          ></textarea>
           <button type='submit' className='btn btn-primary'>
             Submit
           </button>

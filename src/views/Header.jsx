@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import '../../src/assets/styles/header.scss'
-import NavBar from '../views/NavBar.jsx'
+import SearchBar from '../views/SearchBar.jsx'
 
 const Header = () => {
   return (
@@ -18,7 +18,7 @@ const Header = () => {
             </h1>
           </Link>
 
-          <NavBar />
+          <SearchBar />
 
           <div className='nav-link flex'>
             <Link

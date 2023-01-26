@@ -26,7 +26,6 @@ const Movies = () => {
     movies = await movieService.getMovies()
     setMovies(movies)
   }
-
   return (
     <section id='movies'>
       {/* <MovieFilter /> */}
@@ -37,6 +36,7 @@ const Movies = () => {
             {movies.map((movie) => (
               <div className='movie-card flex center' key={movie.id}>
                 <img src={API_IMG + movie.poster_path} alt={movie.title} />
+                <small>Rate:{movie.vote_average}</small>
                 <button className='btn' onClick={() => handleReadMore(movie)}>
                   Read More
                 </button>
