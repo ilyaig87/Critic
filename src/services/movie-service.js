@@ -72,13 +72,7 @@ async function getMediaById(mediaId, show, fromSearch) {
     url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
     genre = 'movie'
   }
-  // if (fromSearch || show.media_type === 'tv' || show.first_air_date) {
-  //   genre = 'tv'
-  // } else {
-  // url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
-  //   data = await storageService.loadFromStorage('searchedDB')
-  //   genre = 'movie'
-  // }
+
   const videoKey = await fetch(url)
     .then((response) => response.json())
     .then((data) => {
