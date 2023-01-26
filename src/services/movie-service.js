@@ -52,7 +52,6 @@ async function getTvShows() {
 }
 
 async function getMediaById(mediaId, show, fromSearch) {
-  console.log(show.media_type)
   let url, data, genre
   if (fromSearch) {
     data = await storageService.loadFromStorage('searchedDB')
