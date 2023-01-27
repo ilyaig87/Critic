@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 // import MovieFilter from '../views/MovieFilter.jsx'
 
@@ -33,7 +33,7 @@ const TvShows = () => {
 
       {tvShows ? (
         <div className='container movies-container'>
-          <h1 className='title flex center'>Our New Movies</h1>
+          <h1 className='title flex center'>Our Popular TV Shows</h1>
           <div className='movie-container grid'>
             {tvShows.map((tVShow) => {
               if (tVShow.poster_path) {

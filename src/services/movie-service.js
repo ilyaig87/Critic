@@ -1,9 +1,8 @@
 import { storageService } from './storage.service'
-const API_URL1 = `https://api.themoviedb.org/3/tv/top_rated?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`
-const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}`
+const API_URL1 = `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&`
+const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&`
 const API_TV_SHOW_VIDEO = `https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
 const API_MOVIE_VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-const SEARCH_MOVIE = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=false`
 
 export const movieService = {
   getMovies,
@@ -16,18 +15,20 @@ export const movieService = {
 async function getMovies() {
   let movies = storageService.loadFromStorage('moviesDB')
   if (!movies || movies.length === 0) {
-    try {
-      const res = await fetch(API_URL)
-      if (!res.ok) {
-        throw new Error(res.statusText)
+    movies = []
+    for (let i = 1; i <= 10; i++) {
+      const res = await fetch(API_URL + `page=${i}`)
+      try {
+        if (!res.ok) {
+          throw new Error(res.statusText)
+        }
+        const data = await res.json()
+        movies = [...movies, ...data.results]
+      } catch (error) {
+        console.error(error)
       }
-      const data = await res.json()
-      movies = data.results
-      storageService.saveToStorage('moviesDB', movies)
-    } catch (error) {
-      console.error(error)
-      return []
     }
+    storageService.saveToStorage('moviesDB', movies)
   }
   return movies
 }
@@ -35,18 +36,20 @@ async function getMovies() {
 async function getTvShows() {
   let tvShows = storageService.loadFromStorage('tvShowsDB')
   if (!tvShows || tvShows.length === 0) {
-    try {
-      const res = await fetch(API_URL1)
-      if (!res.ok) {
-        throw new Error(res.statusText)
+    tvShows = []
+    for (let i = 1; i <= 5; i++) {
+      const res = await fetch(API_URL1 + `page=${i}`)
+      try {
+        if (!res.ok) {
+          throw new Error(res.statusText)
+        }
+        const data = await res.json()
+        tvShows = [...tvShows, ...data.results]
+      } catch (error) {
+        console.error(error)
       }
-      const data = await res.json()
-      tvShows = data.results
-      storageService.saveToStorage('tvShowsDB', tvShows)
-    } catch (error) {
-      console.error(error)
-      return []
     }
+    storageService.saveToStorage('tvShows', tvShows)
   }
   return tvShows
 }
