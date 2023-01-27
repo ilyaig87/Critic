@@ -13,7 +13,6 @@ const SearchBar = () => {
   }
 
   const handleSearch = async (searchQuery) => {
-    console.log(searchQuery)
     const results = await movieService.searchAll(searchQuery)
     setSearchResults(results)
     navigate('/searched-movies', {
@@ -30,16 +29,16 @@ const SearchBar = () => {
   }, [searchQuery])
 
   return (
-    <div className='search-bar flex'>
-      <form onSubmit={() => handleSearch(searchQuery)}>
+    <div className='search-bar-container flex row space-between'>
+      <form className='flex' onSubmit={() => handleSearch(searchQuery)}>
         <input
-          className=' '
+          className=''
           type='text'
           value={searchQuery}
           placeholder='Search your movie...'
           onChange={handleChange}
         />
-        <button className='btn'>
+        <button className='button'>
           <IoIosSearch className='svg' />
         </button>
       </form>

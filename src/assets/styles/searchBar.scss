@@ -1,16 +1,16 @@
-.search-bar {
+.search-bar-container {
   height: 2rem;
   width: 60%;
-  background: aliceblue;
-
+  background: rgb(176, 217, 253);
+  border-radius: 1rem;
   input {
-    width: 95%;
+    width: 100%;
   }
 }
 
 @media screen and (max-width: 1024px) {
-  .search-bar {
-    width: 14rem;
+  .search-bar-container {
+    max-width: 17rem;
 
     input {
       width: 90%;
@@ -18,7 +18,7 @@
   }
 }
 @media screen and (max-width: 600px) {
-  .search-bar {
-    width: 15rem;
+  .search-bar-container {
+    max-width: 10rem;
   }
 }
