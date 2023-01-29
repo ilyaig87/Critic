@@ -49,7 +49,7 @@ const MediaDetails = () => {
               alt=''
             />
           )}
-          <span>{media.vote_average}</span>
+          <span>{media.vote_average.toFixed(1)}</span>
           <div className='movie-video'>
             <h3>Watch the trailer</h3>
             {media.videoKey ? (

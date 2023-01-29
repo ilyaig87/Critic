@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { IoIosSearch } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service'
+import Loader from './Loader'
 
 const SearchBar = () => {
   const navigate = useNavigate()

@@ -1,7 +1,6 @@
 .contact-container {
   width: 40%;
   border-radius: 2rem;
-  background: var(--color-bg-variant);
   padding: 2rem;
 
   .contact-title {
@@ -10,6 +9,7 @@
     padding: 1rem;
   }
   .contact-form {
+    width: 40%;
     background: var(--color-bg);
     padding: 2rem;
     border-radius: 1rem;
@@ -17,6 +17,6 @@
   }
   form {
     text-align: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 }

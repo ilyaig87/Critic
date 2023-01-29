@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
+import Loader from '../views/Loader.jsx'
 // import MovieFilter from '../views/MovieFilter.jsx'
 
 const API_IMG = 'https://image.tmdb.org/t/p/w500'
@@ -57,7 +58,7 @@ const TvShows = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <Loader />
       )}
     </section>
   )

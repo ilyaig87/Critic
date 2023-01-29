@@ -49,7 +49,7 @@ async function getTvShows() {
         console.error(error)
       }
     }
-    storageService.saveToStorage('tvShows', tvShows)
+    storageService.saveToStorage('tvShowsDB', tvShows)
   }
   return tvShows
 }
