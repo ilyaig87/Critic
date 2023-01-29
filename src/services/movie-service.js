@@ -119,7 +119,7 @@ async function query(filterBy) {
 }
 
 async function searchAll(searchQuery) {
-  localStorage.removeItem('searchedDB')
+  // localStorage.removeItem('searchedDB')
   let url
 
   url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`

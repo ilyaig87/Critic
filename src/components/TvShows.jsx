@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 import Loader from '../views/Loader.jsx'
+import MovieFilter from '../views/MovieFilter.jsx'
 // import MovieFilter from '../views/MovieFilter.jsx'
 
 const API_IMG = 'https://image.tmdb.org/t/p/w500'
@@ -9,7 +10,7 @@ const API_IMG = 'https://image.tmdb.org/t/p/w500'
 const TvShows = () => {
   const navigate = useNavigate()
   let [tvShows, setTvShows] = useState()
-  // console.log(tvShows)
+  const [displayCount, setDisplayCount] = useState(16)
   useEffect(() => {
     loadTvShows()
   }, [])
@@ -28,6 +29,10 @@ const TvShows = () => {
     setTvShows(tvShows)
   }
 
+  const handleLoadMore = () => {
+    setDisplayCount(displayCount + 16)
+  }
+
   return (
     <section id='movies'>
       {/* <MovieFilter /> */}
@@ -36,7 +41,7 @@ const TvShows = () => {
         <div className='container movies-container'>
           <h1 className='title flex center'>Our Popular TV Shows</h1>
           <div className='movie-container grid'>
-            {tvShows.map((tVShow) => {
+            {tvShows.slice(0, displayCount).map((tVShow) => {
               if (tVShow.poster_path) {
                 return (
                   <div className='movie-card flex center' key={tVShow.id}>
@@ -60,6 +65,11 @@ const TvShows = () => {
       ) : (
         <Loader />
       )}
+      <div className='load-more-btn flex center'>
+        <button className='btn' onClick={handleLoadMore}>
+          Load More
+        </button>
+      </div>
     </section>
   )
 }

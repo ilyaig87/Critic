@@ -17,8 +17,6 @@ function App() {
       <Routes>
         <Route path='/contact' element={<Contact />} />
         <Route path='/about' element={<About />} />
-        {/* <Route path='/movie/:movieId' element={<MovieDetails />} /> */}
-        {/* <Route path='/tv-show/:tvShowId' element={<TvShowsDetails />} /> */}
         <Route path='/show/:id' element={<MediaDetails />} />
         <Route path='/searched-movies' element={<SearchResults />} />
         <Route path='/tv-shows' element={<TvShows />} />
