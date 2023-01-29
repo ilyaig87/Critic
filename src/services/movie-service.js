@@ -114,7 +114,6 @@ async function query(filterBy) {
       )
     }
   }
-
   return movies
 }
 

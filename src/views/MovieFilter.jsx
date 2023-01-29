@@ -33,27 +33,36 @@ export class MovieFilter extends React.Component {
   }
   render() {
     return (
-      <section id='movie-filter' className='container movie-filter-container'>
-        {
-          <form onSubmit={this.onFilter}>
-            <label htmlFor='by-title'>Title :</label>
-            <input
-              type='text'
-              placeholder='by title...'
-              id='by-title'
-              name='movieTitle'
-              onChange={this.handleChange}
-            />
+      <section id='movie-filter' className='container movie-filter-container '>
+        <div className=' flex center'>
+          {
+            <form className='flex ' onSubmit={this.onFilter}>
+              <label htmlFor='by-title'>
+                Title :
+                <input
+                  className='title-input'
+                  type='text'
+                  placeholder='by title...'
+                  id='by-title'
+                  name='movieTitle'
+                  onChange={this.handleChange}
+                />
+              </label>
 
-            <label htmlFor='by-rating'>Rating :</label>
-            <input
-              type='text'
-              placeholder='by rating..'
-              id='by-rating'
-              name='rating'
-              onChange={this.handleChange}
-            />
-
+              <label htmlFor='by-rating'>
+                Rating :
+                <input
+                  className='rating-input'
+                  type='number'
+                  placeholder='by rating..'
+                  id='by-rating'
+                  name='rating'
+                  max='10'
+                  min='0'
+                  onChange={this.handleChange}
+                />
+              </label>
+              {/* 
             <label htmlFor='by-release-date'>Release Date :</label>
             <input
               type='number'
@@ -62,11 +71,10 @@ export class MovieFilter extends React.Component {
               name='releaseDate'
               // value={maxSpeed}
               onChange={this.handleChange}
-            />
-
-            <button className='btn'>Filter!</button>
-          </form>
-        }
+            /> */}
+            </form>
+          }
+        </div>
         {/* <button className='search-btn' onClick={this.goSearch}>
         Go Search!
       </button> */}

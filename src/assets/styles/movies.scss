@@ -38,9 +38,17 @@
     .movie-card > .btn-primary {
       margin-top: 1rem;
     }
+    button {
+      font-size: larger;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
   }
   .title {
     color: var(--color-light);
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+  small {
+    font-size: larger;
     font-family: 'Barlow Condensed', sans-serif;
   }
 }
