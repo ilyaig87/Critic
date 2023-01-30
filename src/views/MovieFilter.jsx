@@ -34,9 +34,9 @@ export class MovieFilter extends React.Component {
   render() {
     return (
       <section id='movie-filter' className='container movie-filter-container '>
-        <div className=' flex center'>
+        <div className='filter-container flex center'>
           {
-            <form className='flex ' onSubmit={this.onFilter}>
+            <form className='filter flex ' onSubmit={this.onFilter}>
               <label htmlFor='by-title'>
                 Title :
                 <input

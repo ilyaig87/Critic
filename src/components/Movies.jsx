@@ -61,9 +61,9 @@ const Movies = () => {
     if (rating && movie.vote_average < rating) {
       return false
     }
-    if (releaseDate && movie.release_date.substring(0, 4) !== releaseDate) {
-      return false
-    }
+    // if (releaseDate && movie.release_date.substring(0, 4) !== releaseDate) {
+    //   return false
+    // }
     return true
   }
 

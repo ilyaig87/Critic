@@ -8,7 +8,9 @@
   .menu-container.open {
     display: block;
   }
-
+  .search-bar-container {
+    width: 30rem;
+  }
   .logo-container {
     align-items: center;
   }
@@ -34,6 +36,9 @@
   .header-container {
     .nav-link {
       gap: 1rem;
+    }
+    .search-bar-container {
+      max-width: 13rem;
     }
   }
 }
