@@ -37,7 +37,7 @@ async function getTvShows() {
   let tvShows = storageService.loadFromStorage('tvShowsDB')
   if (!tvShows || tvShows.length === 0) {
     tvShows = []
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
       const res = await fetch(API_URL1 + `page=${i}`)
       try {
         if (!res.ok) {
@@ -121,7 +121,7 @@ async function searchAll(searchQuery) {
   // localStorage.removeItem('searchedDB')
   let url
 
-  url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&query=${searchQuery}`
+  url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`
 
   try {
     const res = await fetch(url)

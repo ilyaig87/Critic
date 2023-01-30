@@ -52,7 +52,6 @@ const TvShows = () => {
 
   const filterTvShow = (tvShow) => {
     const { movieTitle, rating, releaseDate } = filterBy
-    console.log('filterBy:', filterBy)
     if (
       movieTitle &&
       !tvShow.name.toLowerCase().includes(movieTitle.toLowerCase())

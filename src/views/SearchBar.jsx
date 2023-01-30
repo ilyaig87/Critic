@@ -36,7 +36,7 @@ const SearchBar = () => {
           className=''
           type='text'
           value={searchQuery}
-          placeholder='Search your movie...'
+          placeholder='Search Movie/TV-Show...'
           onChange={handleChange}
         />
         <button className='button'>
