@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className='container about-container '>
+    <section id='about' className='container about-container '>
       <div className='about-text flex center row'>
         <h1>
           ABOUT <span className='logo-container'></span>
@@ -25,7 +25,7 @@ const About = () => {
           show.
         </p>
       </div>
-    </div>
+    </section>
   )
 }
 

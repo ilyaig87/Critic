@@ -4,7 +4,10 @@ import React from 'react'
 
 const Contact = () => {
   return (
-    <div className='container contact-container flex column center'>
+    <section
+      id='contact'
+      className='container contact-container flex column center'
+    >
       <div className='contact-title '>
         <h1>CONTACT</h1>
       </div>
@@ -37,7 +40,7 @@ const Contact = () => {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   )
 }
 

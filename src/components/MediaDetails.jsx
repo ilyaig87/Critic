@@ -36,6 +36,7 @@ const MediaDetails = () => {
           ) : (
             <h1 className='movie-title'>{media.title.substring(0, 25)}</h1>
           )}
+          <h5>Release Date: {convertDate(media.release_date)}</h5>
           {media.backdrop_path ? (
             <img
               className='card-img'
@@ -64,10 +65,11 @@ const MediaDetails = () => {
             <p className={`${!showFullText ? 'limited-lines' : ''}`}>
               {media.overview}
             </p>
-            <button className='btn read-more-btn' onClick={handleReadMore}>
-              {showFullText ? 'Read Less' : 'Read More'}
-            </button>
-            <h5>Movie Release Date: {convertDate(media.release_date)}</h5>
+            <section>
+              <button className='btn read-more-btn' onClick={handleReadMore}>
+                {showFullText ? 'Read Less' : 'Read More'}
+              </button>
+            </section>
             <Link to={`/`} className='btn btn-primary'>
               Go Back
             </Link>
