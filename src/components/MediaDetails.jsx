@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { movieService } from '../services/movie-service'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { IoIosStar, IoIosArrowBack } from 'react-icons/io'
-import { FiCalendar, FiFilm } from 'react-icons/fi'
+import { FiCalendar, FiFilm, FiClock } from 'react-icons/fi'
 import moment from 'moment-timezone'
 import Loader from '../views/Loader.jsx'
 
@@ -12,26 +12,48 @@ const FALLBACK = require('../assets/images/no-photo.png')
 
 const MediaDetails = () => {
   const location = useLocation()
-  const [media, setMedia] = useState(null)
-  const [showFullText, setShowFullText] = useState(false)
   const { id } = useParams()
+  const [media, setMedia] = useState(null) // null = loading, false = error
+  const [showFullText, setShowFullText] = useState(false)
 
   useEffect(() => {
-    movieService
-      .getMediaById(+id, location.state.media, location.state.fromSearch)
-      .then((data) => setMedia(data))
+    let active = true
     window.scrollTo(0, 0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setMedia(null)
+    movieService
+      .getMediaById(+id, location.state?.media)
+      .then((data) => active && setMedia(data || false))
+      .catch(() => active && setMedia(false))
+    return () => {
+      active = false
+    }
+  }, [id, location.state])
 
   const convertDate = (date) => {
     if (!date) return 'Unknown'
-    const americaTime = moment.tz(date, 'America/New_York')
-    const israelTime = americaTime.clone().tz('Asia/Jerusalem')
-    return israelTime.format('MMM D, YYYY')
+    return moment(date).format('MMM D, YYYY')
   }
 
-  if (!media) return <Loader />
+  const formatRuntime = (min) => {
+    if (!min) return null
+    const h = Math.floor(min / 60)
+    const m = min % 60
+    return h ? `${h}h ${m}m` : `${m}m`
+  }
+
+  if (media === null) return <Loader />
+
+  if (media === false) {
+    return (
+      <div className='container detail-error fade-up'>
+        <h2>We couldn&apos;t load this title.</h2>
+        <p>It may have been removed, or the connection failed.</p>
+        <Link to='/' className='btn btn-primary'>
+          <IoIosArrowBack /> Back to browse
+        </Link>
+      </div>
+    )
+  }
 
   const title = media.name || media.title || 'Untitled'
   const date = media.release_date || media.first_air_date
@@ -43,13 +65,14 @@ const MediaDetails = () => {
     : FALLBACK
   const poster = media.poster_path ? API_IMG + media.poster_path : FALLBACK
   const isTv = media.genre === 'tv' || !!media.first_air_date
+  const runtime = formatRuntime(
+    media.runtime || (media.episode_run_time && media.episode_run_time[0])
+  )
+  const genres = media.genres || []
 
   return (
     <div className='media-details fade-up'>
-      <div
-        className='backdrop'
-        style={{ backgroundImage: `url(${backdrop})` }}
-      >
+      <div className='backdrop' style={{ backgroundImage: `url(${backdrop})` }}>
         <div className='backdrop-veil' />
       </div>
 
@@ -69,9 +92,26 @@ const MediaDetails = () => {
             <span className='tag date'>
               <FiCalendar /> {convertDate(date)}
             </span>
+            {runtime && (
+              <span className='tag'>
+                <FiClock /> {runtime}
+              </span>
+            )}
           </div>
 
           <h1 className='movie-title'>{title}</h1>
+
+          {media.tagline && <p className='tagline'>“{media.tagline}”</p>}
+
+          {genres.length > 0 && (
+            <div className='genres'>
+              {genres.map((g) => (
+                <span className='genre-chip' key={g.id}>
+                  {g.name}
+                </span>
+              ))}
+            </div>
+          )}
 
           <p className={`overview ${!showFullText ? 'limited-lines' : ''}`}>
             {media.overview || 'No overview available for this title.'}

@@ -1,8 +1,12 @@
 import { storageService } from './storage.service'
-const API_URL1 = `https://api.themoviedb.org/3/tv/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&`
-const API_URL = `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&`
-const API_TV_SHOW_VIDEO = `https://api.themoviedb.org/3/tv/{tv_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
-const API_MOVIE_VIDEO = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+
+// TMDB v3 key. Prefer an env var; fall back to the public demo key
+// (this is a browser/read-only key, already exposed in every request).
+const API_KEY = process.env.REACT_APP_API_KEY || '41b26313fe5f84c44912ea80529a9fd6'
+const BASE = 'https://api.themoviedb.org/3'
+
+const API_URL1 = `${BASE}/tv/popular?api_key=${API_KEY}&language=en-US&`
+const API_URL = `${BASE}/movie/popular?api_key=${API_KEY}&language=en-US&`
 
 export const movieService = {
   getMovies,
@@ -67,45 +71,38 @@ async function getTvShows() {
   return tvShows
 }
 
-async function getMediaById(mediaId, show, fromSearch) {
-  let url, data, genre
-  if (fromSearch) {
-    data = await storageService.loadFromStorage('searchedDB')
-    if (show.media_type === 'tv') {
-      url = API_TV_SHOW_VIDEO.replace('{tv_id}', mediaId)
-      genre = 'tv'
-    } else {
-      url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
-      genre = 'movie'
-    }
-  } else if (show.first_air_date) {
-    data = await storageService.loadFromStorage('tvShowsDB')
-    url = API_TV_SHOW_VIDEO.replace('{tv_id}', mediaId)
-    genre = 'tv'
-  } else {
-    data = await storageService.loadFromStorage('moviesDB')
-    url = API_MOVIE_VIDEO.replace('{movie_id}', mediaId)
-    genre = 'movie'
-  }
+// Fetch full media details straight from TMDB by id, including its trailer.
+// Works from a card click, a direct link, or a page refresh (no reliance on
+// router state), and never hangs: returns null on failure.
+async function getMediaById(mediaId, hint) {
+  const looksTv =
+    hint &&
+    (hint.media_type === 'tv' ||
+      !!hint.first_air_date ||
+      (!!hint.name && !hint.title))
+  const order = looksTv ? ['tv', 'movie'] : ['movie', 'tv']
 
-  const videoKey = await fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.results.length > 0) {
-        return data.results[0].key
-      } else {
-        console.log('err')
-        return null
-      }
-    })
-  const idx = data.findIndex((media) => media.id === mediaId)
-  if (idx === -1) {
-    return null
+  for (const type of order) {
+    try {
+      const url = `${BASE}/${type}/${mediaId}?api_key=${API_KEY}&language=en-US&append_to_response=videos`
+      const res = await fetch(url)
+      if (!res.ok) continue
+
+      const data = await res.json()
+      const videos = (data.videos && data.videos.results) || []
+      const trailer =
+        videos.find((v) => v.site === 'YouTube' && v.type === 'Trailer') ||
+        videos.find((v) => v.site === 'YouTube') ||
+        videos[0]
+
+      data.videoKey = trailer ? trailer.key : null
+      data.genre = type
+      return data
+    } catch (error) {
+      console.error(error)
+    }
   }
-  const media = data[idx]
-  media.videoKey = videoKey
-  media.genre = genre
-  return media
+  return null
 }
 
 async function query(filterBy) {
@@ -134,7 +131,7 @@ async function searchAll(searchQuery) {
   // localStorage.removeItem('searchedDB')
   let url
 
-  url = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`
+  url = `${BASE}/search/multi?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${searchQuery}`
 
   try {
     const res = await fetch(url)
