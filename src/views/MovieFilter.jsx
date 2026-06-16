@@ -1,85 +1,74 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { IoIosSearch, IoIosStar } from 'react-icons/io'
 
-export class MovieFilter extends React.Component {
-  state = {
-    filterBy: {
-      movieTitle: '',
-      rate: '',
-      releaseDate: '',
-    },
-  }
-  inputRef = React.createRef()
+const RATINGS = [
+  { label: 'All', value: '' },
+  { label: '6+', value: '6' },
+  { label: '7+', value: '7' },
+  { label: '8+', value: '8' },
+  { label: '9+', value: '9' },
+]
 
-  handleChange = ({ target }) => {
-    const field = target.name
-    const value = target.value
+const MovieFilter = ({ onSetFilter }) => {
+  const [filterBy, setFilterBy] = useState({
+    movieTitle: '',
+    rating: '',
+    releaseDate: '',
+  })
 
-    this.setState(
-      (prevState) => ({
-        filterBy: {
-          ...prevState.filterBy,
-          [field]: value,
-        },
-      }),
-      () => {
-        this.props.onSetFilter(this.state.filterBy)
-      }
-    )
+  const update = (next) => {
+    setFilterBy(next)
+    onSetFilter(next)
   }
 
-  onFilter = (ev) => {
-    ev.preventDefault()
-    this.props.onSetFilter(this.state.filterBy)
-  }
-  render() {
-    return (
-      <section id='movie-filter' className='container movie-filter-container '>
-        <div className='filter-container flex center'>
-          {
-            <form className='filter flex ' onSubmit={this.onFilter}>
-              <label htmlFor='by-title'>
-                Title :
-                <input
-                  className='title-input'
-                  type='text'
-                  placeholder='by title...'
-                  id='by-title'
-                  name='movieTitle'
-                  onChange={this.handleChange}
-                />
-              </label>
+  const handleTitle = ({ target }) =>
+    update({ ...filterBy, movieTitle: target.value })
 
-              <label htmlFor='by-rating'>
-                Rating :
-                <input
-                  className='rating-input'
-                  type='number'
-                  placeholder='by rating..'
-                  id='by-rating'
-                  name='rating'
-                  max='10'
-                  min='0'
-                  onChange={this.handleChange}
-                />
-              </label>
-              {/* 
-            <label htmlFor='by-release-date'>Release Date :</label>
-            <input
-              type='number'
-              placeholder='by release-date..'
-              id='by-release-date'
-              name='releaseDate'
-              // value={maxSpeed}
-              onChange={this.handleChange}
-            /> */}
-            </form>
-          }
+  const handleRating = (value) => update({ ...filterBy, rating: value })
+
+  return (
+    <section className='movie-filter-container'>
+      <div className='filter-bar'>
+        <div className='filter-search'>
+          <IoIosSearch className='icon' />
+          <input
+            type='text'
+            placeholder='Filter by title…'
+            value={filterBy.movieTitle}
+            onChange={handleTitle}
+            aria-label='Filter by title'
+          />
+          {filterBy.movieTitle && (
+            <button
+              className='clear'
+              onClick={() => update({ ...filterBy, movieTitle: '' })}
+              aria-label='Clear title filter'
+            >
+              ×
+            </button>
+          )}
         </div>
-        {/* <button className='search-btn' onClick={this.goSearch}>
-        Go Search!
-      </button> */}
-      </section>
-    )
-  }
+
+        <div className='filter-ratings'>
+          <span className='label'>
+            <IoIosStar /> Rating
+          </span>
+          <div className='rating-pills'>
+            {RATINGS.map((r) => (
+              <button
+                key={r.label}
+                type='button'
+                className={`pill ${filterBy.rating === r.value ? 'active' : ''}`}
+                onClick={() => handleRating(r.value)}
+              >
+                {r.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
 }
+
 export default MovieFilter
