@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { IoIosSearch, IoIosStar } from 'react-icons/io'
+import { FiCalendar } from 'react-icons/fi'
 
 const RATINGS = [
   { label: 'All', value: '' },
@@ -9,11 +10,17 @@ const RATINGS = [
   { label: '9+', value: '9' },
 ]
 
+const CURRENT_YEAR = new Date().getFullYear()
+const YEARS = Array.from(
+  { length: CURRENT_YEAR - 1970 + 1 },
+  (_, i) => CURRENT_YEAR - i
+)
+
 const MovieFilter = ({ onSetFilter }) => {
   const [filterBy, setFilterBy] = useState({
     movieTitle: '',
     rating: '',
-    releaseDate: '',
+    year: '',
   })
 
   const update = (next) => {
@@ -25,6 +32,9 @@ const MovieFilter = ({ onSetFilter }) => {
     update({ ...filterBy, movieTitle: target.value })
 
   const handleRating = (value) => update({ ...filterBy, rating: value })
+
+  const handleYear = ({ target }) =>
+    update({ ...filterBy, year: target.value })
 
   return (
     <section className='movie-filter-container'>
@@ -47,6 +57,22 @@ const MovieFilter = ({ onSetFilter }) => {
               ×
             </button>
           )}
+        </div>
+
+        <div className='filter-year'>
+          <FiCalendar className='icon' />
+          <select
+            value={filterBy.year}
+            onChange={handleYear}
+            aria-label='Filter by year'
+          >
+            <option value=''>All Years</option>
+            {YEARS.map((y) => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className='filter-ratings'>

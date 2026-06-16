@@ -7,9 +7,9 @@ import MovieCard from '../views/MovieCard.jsx'
 
 const TvShows = () => {
   const [filterBy, setFilterBy] = useState({
-    tvShowTitle: '',
+    movieTitle: '',
     rating: '',
-    releaseDate: '',
+    year: '',
   })
 
   let [filteredTvShows, setFilteredTvShows] = useState()
@@ -52,7 +52,7 @@ const TvShows = () => {
   }
 
   const filterTvShow = (tvShow) => {
-    const { movieTitle, rating } = filterBy
+    const { movieTitle, rating, year } = filterBy
     if (
       movieTitle &&
       !tvShow.name.toLowerCase().includes(movieTitle.toLowerCase())
@@ -62,9 +62,12 @@ const TvShows = () => {
     if (rating && tvShow.vote_average < rating) {
       return false
     }
-    // if (releaseDate && tvShow.release_date.substring(0, 4) !== releaseDate) {
-    //   return false
-    // }
+    if (year) {
+      const date = tvShow.first_air_date || tvShow.release_date
+      if (!date || date.substring(0, 4) !== year) {
+        return false
+      }
+    }
     return true
   }
 

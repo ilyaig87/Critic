@@ -10,7 +10,7 @@ const Movies = () => {
   const [filterBy, setFilterBy] = useState({
     movieTitle: '',
     rating: '',
-    releaseDate: '',
+    year: '',
   })
 
   const navigate = useNavigate()
@@ -52,7 +52,7 @@ const Movies = () => {
   }
 
   const filterMovie = (movie) => {
-    const { movieTitle, rating } = filterBy
+    const { movieTitle, rating, year } = filterBy
     if (
       movieTitle &&
       !movie.title.toLowerCase().includes(movieTitle.toLowerCase())
@@ -62,9 +62,12 @@ const Movies = () => {
     if (rating && movie.vote_average < rating) {
       return false
     }
-    // if (releaseDate && movie.release_date.substring(0, 4) !== releaseDate) {
-    //   return false
-    // }
+    if (year) {
+      const date = movie.release_date || movie.first_air_date
+      if (!date || date.substring(0, 4) !== year) {
+        return false
+      }
+    }
     return true
   }
 

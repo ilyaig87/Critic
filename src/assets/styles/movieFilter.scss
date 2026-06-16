@@ -71,6 +71,66 @@
     }
   }
 
+  // ---- Year dropdown ----
+  .filter-year {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    background: var(--color-surface-2);
+    border: 1px solid transparent;
+    transition: var(--transition);
+
+    .icon {
+      font-size: 1.05rem;
+      color: var(--color-muted);
+      flex-shrink: 0;
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      color: var(--color-white);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding-right: 1.2rem;
+      cursor: pointer;
+
+      &:focus { outline: none; }
+
+      // dropdown list lives outside the dark theme; force readable colors
+      option {
+        background: #12121c;
+        color: var(--color-white);
+      }
+    }
+
+    // custom chevron
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0.95rem;
+      top: 50%;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-right: 2px solid var(--color-muted);
+      border-bottom: 2px solid var(--color-muted);
+      transform: translateY(-65%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    &:focus-within {
+      border-color: rgba(34, 211, 238, 0.45);
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+      .icon { color: var(--color-primary); }
+    }
+  }
+
   // ---- Rating quick-filter ----
   .filter-ratings {
     display: flex;
