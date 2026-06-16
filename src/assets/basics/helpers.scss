@@ -1,26 +1,20 @@
 /* HELPERS */
 
-.grid {
-  display: grid;
-}
-
-.flex {
-  display: flex;
-}
-
-.row {
-  flex-direction: row;
-}
-
-.column {
-  flex-direction: column;
-}
+.grid { display: grid; }
+.flex { display: flex; }
+.row { flex-direction: row; }
+.column { flex-direction: column; }
 
 .center {
   justify-content: center;
   align-items: center;
 }
 
-.space-between {
-  justify-content: space-between;
+.space-between { justify-content: space-between; }
+
+.glass {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }

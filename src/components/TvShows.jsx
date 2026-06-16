@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 import Loader from '../views/Loader.jsx'
 import MovieFilter from '../views/MovieFilter.jsx'
-
-const API_IMG = 'https://image.tmdb.org/t/p/w500'
+import MovieCard from '../views/MovieCard.jsx'
 
 const TvShows = () => {
   const [filterBy, setFilterBy] = useState({
@@ -71,36 +70,40 @@ const TvShows = () => {
     <section id='movies'>
       {filteredTvShows ? (
         <div className='container movies-container'>
-          <h1 className='title flex center'>Our Popular TV Shows</h1>
+          <div className='section-head'>
+            <span className='eyebrow'>Binge-worthy</span>
+            <h1>Popular TV Shows</h1>
+            <p className='sub'>
+              The series everyone is talking about, right now.
+            </p>
+          </div>
+
           <MovieFilter onSetFilter={handleSetFilter} />
 
-          <div className='movie-container grid'>
-            {filteredTvShows.slice(0, displayCount).map((tVShow) => {
-              if (tVShow.poster_path) {
-                return (
-                  <div className='movie-card flex center' key={tVShow.id}>
-                    <img src={API_IMG + tVShow.poster_path} alt={tVShow.name} />
-                    <small>Rate:{tVShow.vote_average.toFixed(1)}</small>
-                    <button
-                      className='btn'
-                      onClick={() => handleReadMore(tVShow)}
-                    >
-                      Read More
-                    </button>
-                  </div>
-                )
-              }
-            })}
+          <div className='movie-grid grid'>
+            {filteredTvShows
+              .filter((tv) => tv.poster_path)
+              .slice(0, displayCount)
+              .map((tVShow) => (
+                <MovieCard
+                  key={tVShow.id}
+                  media={tVShow}
+                  onReadMore={handleReadMore}
+                />
+              ))}
           </div>
+
+          {displayCount < filteredTvShows.length && (
+            <div className='load-more-btn flex center'>
+              <button className='btn btn-primary' onClick={handleLoadMore}>
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <Loader />
       )}
-      <div className='load-more-btn flex center'>
-        <button className='btn' onClick={handleLoadMore}>
-          Load More
-        </button>
-      </div>
     </section>
   )
 }

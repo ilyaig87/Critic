@@ -1,82 +1,125 @@
 .movies-container {
-  .movie-container {
-    grid-template-columns: repeat(4, 1fr);
-    font-family: 'Poppins';
-    gap: 2rem;
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1.6rem;
+  }
+}
 
-    .movie-card {
-      margin-top: 1rem;
-      box-shadow: 0px -1px 31px -3px rgba(0, 0, 0, 0.75);
-      gap: 1rem;
-      padding: 1rem;
-      background: var(--color-primary-variant);
-      flex-direction: column;
-      border-radius: 2rem;
-      color: var(--color-light1);
-      -webkit-transition: background-color 1s ease-out;
-      -moz-transition: background-color 1s ease-out;
-      -o-transition: background-color 1s ease-out;
-      transition: background-color 1s ease-out;
+// ---- Card (shared by Movies, TV, Search) ----
+.movie-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: var(--transition);
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 
-      img {
-        border-radius: 1rem;
-      }
+  .poster {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
+  }
 
-    .movie-card > h2 {
-      padding: 1rem;
-      height: 8rem;
-      font-size: medium;
-      transition: height 0.2s;
+  .rating-badge {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.28rem 0.55rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: var(--color-dark);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    box-shadow: var(--shadow-sm);
+
+    svg { font-size: 0.9rem; }
+
+    &.high { background: linear-gradient(135deg, #34d399, #22d3ee); }
+    &.mid  { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    &.low  { background: linear-gradient(135deg, #fb7185, #f43f5e); color: var(--color-white); }
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.2rem;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 9, 0.9) 0%,
+      rgba(5, 5, 9, 0.35) 45%,
+      transparent 75%
+    );
+    opacity: 0;
+    transition: var(--transition);
+
+    .play-btn {
+      transform: translateY(12px);
+      transition: var(--transition);
     }
+  }
 
-    .movie-card:hover {
+  .card-body {
+    padding: 0.85rem 0.95rem 1rem;
+
+    .movie-name {
+      font-size: 0.98rem;
+      font-weight: 600;
       color: var(--color-white);
-      background: var(--color-bg);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .movie-card > .btn-primary {
-      margin-top: 1rem;
-    }
-    button {
-      font-size: larger;
-      font-family: 'Barlow Condensed', sans-serif;
+    .year {
+      font-size: 0.8rem;
+      color: var(--color-muted);
     }
   }
-  .title {
-    color: var(--color-light);
-    font-family: 'Barlow Condensed', sans-serif;
-  }
-  small {
-    font-size: larger;
-    font-family: 'Barlow Condensed', sans-serif;
+
+  &:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-md), var(--glow-secondary);
+
+    .poster img { transform: scale(1.08); }
+
+    .overlay {
+      opacity: 1;
+      .play-btn { transform: translateY(0); }
+    }
   }
 }
+
+.empty-state {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 3rem 0;
+  font-size: 1.1rem;
+}
+
 .load-more-btn {
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
-@media (max-width: 1024px) {
-  .movies-container {
-    .movie-container {
-      grid-template-columns: repeat(3, 1fr);
 
-      .title {
-        font-size: 2rem;
-      }
-      .movie-container > h2 {
-        padding: 0;
-      }
-    }
-  }
-}
 @media (max-width: 600px) {
-  .movies-container {
-    .movie-container {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .title {
-      font-size: 1.5rem;
-    }
+  .movies-container .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }

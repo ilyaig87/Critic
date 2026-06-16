@@ -1,7 +1,6 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import Loader from '../views/Loader'
+import { useLocation, useNavigate } from 'react-router-dom'
+import MovieCard from '../views/MovieCard.jsx'
 
 const SearchResults = () => {
   const navigate = useNavigate()
@@ -17,47 +16,41 @@ const SearchResults = () => {
       },
     })
   }
+
+  const validResults = searchResults.filter(
+    (r) => r.media_type !== 'person' && (r.title || r.name)
+  )
+
   return (
     <section id='searched-movies'>
-      {/* <MovieFilter /> */}
-      {searchQuery ? (
-        <div className='container searched-movies-container'>
-          <h1 className='title flex center'>
-            Your Search For : {searchQuery.toUpperCase()}
+      <div className='container movies-container'>
+        <div className='section-head'>
+          <span className='eyebrow'>Search Results</span>
+          <h1>
+            Results for <span className='text-gradient'>“{searchQuery}”</span>
           </h1>
-          <div className='searched-movie-container grid'>
-            {searchResults.map((result) => (
-              <div key={result.id} className='searched-movie-card flex center'>
-                <small>{result.title}</small>
+          <p className='sub'>
+            {validResults.length} matching title
+            {validResults.length === 1 ? '' : 's'} found.
+          </p>
+        </div>
 
-                <small>{result.name}</small>
-                {result.poster_path ? (
-                  <img
-                    alt={result.title}
-                    src={`https://image.tmdb.org/t/p/w500/${result.poster_path}`}
-                  />
-                ) : (
-                  <div>
-                    <img src='../assets/images/no-photo.png' alt='' />
-                    <p>Can't Load The Video</p>
-                  </div>
-                )}
-                {result.vote_average ? (
-                  <small>Rate:{result.vote_average}</small>
-                ) : (
-                  ''
-                )}
-
-                <button className='btn' onClick={() => handleReadMore(result)}>
-                  Read More
-                </button>
-              </div>
+        {validResults.length > 0 ? (
+          <div className='movie-grid grid'>
+            {validResults.map((result) => (
+              <MovieCard
+                key={result.id}
+                media={result}
+                onReadMore={handleReadMore}
+              />
             ))}
           </div>
-        </div>
-      ) : (
-        <Loader />
-      )}
+        ) : (
+          <p className='empty-state'>
+            No results found. Try a different title.
+          </p>
+        )}
+      </div>
     </section>
   )
 }

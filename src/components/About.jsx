@@ -1,29 +1,66 @@
 import React from 'react'
+import { FiSearch, FiFilm, FiStar, FiPlayCircle } from 'react-icons/fi'
+
+const features = [
+  {
+    icon: <FiFilm />,
+    title: 'Vast Library',
+    text: 'Thousands of movies and TV shows, refreshed daily from the TMDB database.',
+  },
+  {
+    icon: <FiSearch />,
+    title: 'Instant Search',
+    text: 'Find any title in milliseconds with smart, multi-source search.',
+  },
+  {
+    icon: <FiStar />,
+    title: 'Live Ratings',
+    text: 'Real audience scores so you always know what is worth your time.',
+  },
+  {
+    icon: <FiPlayCircle />,
+    title: 'Trailers Inline',
+    text: 'Preview before you commit — watch official trailers without leaving.',
+  },
+]
 
 const About = () => {
   return (
-    <section id='about' className='container about-container '>
-      <div className='about-text flex center row'>
+    <section id='about' className='container about-container fade-up'>
+      <div className='section-head'>
+        <span className='eyebrow'>About Critic</span>
         <h1>
-          ABOUT <span className='logo-container'></span>
+          Your <span className='text-gradient'>cinematic</span> companion
         </h1>
-        <p className='text '>
-          Welcome to our movie and TV shows site , where you can explore the
-          latest releases and find your next favorite show or film. Our site
-          features an extensive database of movies and TV shows, complete with
-          ratings, trailers, and summaries. Whether you're in the mood for a
-          comedy, drama, or action-packed adventure, our site has something for
-          everyone. We understand that finding the perfect movie or TV show to
-          watch can be overwhelming, which is why we've made it easy to search
-          for specific titles or filter by genre. We also update our database
-          regularly to ensure that you have access to the latest releases. In
-          addition to our extensive database, we also offer trailers and reviews
-          for each title, so you can get a sneak peek and see what others are
-          saying before committing to a watch. Thank you for choosing our site
-          as your go-to source for movies and TV shows. We hope you enjoy
-          browsing through our selection and finding your next favorite film or
-          show.
+        <p className='sub'>
+          Critic is a modern movie &amp; TV discovery platform built for people
+          who love great stories. Browse trending releases, filter by what
+          matters to you, and find your next favorite in seconds — all wrapped
+          in a fast, beautiful interface.
         </p>
+      </div>
+
+      <div className='feature-grid'>
+        {features.map((f) => (
+          <div className='feature-card' key={f.title}>
+            <div className='feature-icon'>{f.icon}</div>
+            <h3>{f.title}</h3>
+            <p>{f.text}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className='about-cta glass'>
+        <div>
+          <h2>Built with React &amp; the TMDB API</h2>
+          <p>
+            A single-page application featuring client-side routing, live data
+            fetching, local caching, search, and responsive design.
+          </p>
+        </div>
+        <a className='btn btn-primary' href='#/'>
+          Start exploring
+        </a>
       </div>
     </section>
   )

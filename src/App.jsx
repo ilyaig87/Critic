@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './assets/styles.scss'
-import { NavBar, Header, Footer } from '../src/views/index.js'
+import { Header, Footer } from '../src/views/index.js'
 import {
   Movies,
   TvShows,

@@ -1,121 +1,183 @@
-.movie-details-container {
-  .card-container {
-    margin-top: 4rem;
-    text-align: center;
-    background: var(--color-primary-variant);
-    padding: 1rem;
-    border-radius: 3rem;
-    position: relative;
-    span {
-      border: 2px solid var(--color-primary-variant);
-      color: black;
-      background: yellow;
-      border-radius: 50%;
-      padding: 0.5rem;
+.media-details {
+  position: relative;
+  padding-bottom: 4rem;
+
+  .backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 32rem;
+    background-size: cover;
+    background-position: center 20%;
+    z-index: -1;
+
+    .backdrop-veil {
       position: absolute;
-      top: 15rem;
-      right: 4.5rem;
+      inset: 0;
+      background: linear-gradient(
+          to bottom,
+          rgba(7, 7, 13, 0.55) 0%,
+          rgba(7, 7, 13, 0.85) 55%,
+          var(--color-bg) 100%
+        ),
+        linear-gradient(to right, rgba(7, 7, 13, 0.7), transparent 60%);
     }
   }
-  img {
-    width: 80%;
+
+  .detail-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    padding-top: 11rem;
+    align-items: start;
   }
 
-  h1 {
-    color: var(--color-primary);
-    font-family: 'Roboto Serif', serif;
-    font-size: 2rem;
+  .poster-col .poster {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border-strong);
   }
 
-  h3 {
-    height: 1rem;
-    color: var(--color-light);
-    padding: 0.5rem;
-    font-weight: 600;
-  }
+  .info-col {
+    padding-top: 2rem;
 
-  p {
-    width: 30rem;
-    color: var(--color-white);
-    font-family: 'Roboto Serif', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    line-height: 1.5rem;
-  }
-  iframe {
-    width: 500px;
-    height: 350px;
-    padding: 2rem;
-  }
-  .no-video {
-    color: red;
-    width: 500px;
-    height: 4em;
-    padding: 2rem;
-  }
-  h5 {
-    padding: 0.5rem;
-    color: var(--color-light);
-  }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
 
-  .btn.read-more-btn {
-    border: none;
-    font-size: 0.7rem;
-    color: var(--color-primary);
-    background-color: var(--color-primary-variant);
-  }
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.35rem 0.8rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        backdrop-filter: blur(8px);
+        color: var(--color-text);
 
-  .limited-lines {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-  }
-}
-@media (max-width: 1024px) {
-  .movie-details-container {
-    .card-container {
-      // padding: 1px;
-      span {
-        top: 12rem;
-        right: 3.5rem;
+        &.rating {
+          color: var(--color-dark);
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          border-color: transparent;
+          font-weight: 600;
+        }
       }
     }
+
     .movie-title {
-      font-size: 1.5rem;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      margin-bottom: 1rem;
     }
-    img {
-      width: 80%;
+
+    .overview {
+      color: var(--color-text);
+      max-width: 46rem;
+      font-size: 1.02rem;
+      line-height: 1.8;
     }
-    p {
-      width: 30rem;
+
+    .limited-lines {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+    }
+
+    .read-more-link {
+      background: none;
+      color: var(--color-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: var(--transition);
+
+      &:hover { color: var(--color-white); }
+    }
+
+    .trailer {
+      margin-top: 2.5rem;
+
+      h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-left: 1rem;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 4px;
+          height: 1.2rem;
+          border-radius: 2px;
+          background: var(--gradient-brand);
+        }
+      }
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      max-width: 46rem;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-border);
+
+      iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .no-video {
+      color: var(--color-muted);
+      padding: 2rem;
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      border: 1px dashed var(--color-border-strong);
+      text-align: center;
+      max-width: 46rem;
+    }
+
+    .back-btn {
+      margin-top: 2.5rem;
     }
   }
 }
-@media (max-width: 600px) {
-  .movie-details-container {
-    .card-container {
-      padding: 0.5rem;
-      margin: 1rem;
-      width: 90%;
-      span {
-        top: 7rem;
-        right: 3.5rem;
-      }
-    }
-    p {
-      width: 100%;
-      font-size: 0.8rem;
+
+@media (max-width: 820px) {
+  .media-details {
+    .detail-card {
+      grid-template-columns: 1fr;
+      padding-top: 9rem;
+      gap: 1.5rem;
+      justify-items: center;
+      text-align: center;
     }
 
-    img {
-      width: 70%;
-    }
-    iframe {
-      width: 90%;
-      height: 250px;
-      padding: 1.5rem;
+    .poster-col .poster { max-width: 220px; }
+
+    .info-col {
+      padding-top: 0;
+      width: 100%;
+      .tags { justify-content: center; }
+      .overview { margin: 0 auto; }
+      .trailer h3 { padding-left: 0; &::before { display: none; } }
+      .video-frame, .no-video { margin: 0 auto; }
     }
   }
 }

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { movieService } from '../services/movie-service.js'
 import MovieFilter from '../views/MovieFilter.jsx'
 import Loader from '../views/Loader.jsx'
-
-const API_IMG = 'https://image.tmdb.org/t/p/w500'
+import Hero from '../views/Hero.jsx'
+import MovieCard from '../views/MovieCard.jsx'
 
 const Movies = () => {
   const [filterBy, setFilterBy] = useState({
@@ -68,33 +68,49 @@ const Movies = () => {
   }
 
   return (
-    <section id='movies'>
-      {filteredMovies ? (
-        <div className='container movies-container'>
-          <h1 className='title flex center'>Our New Movies</h1>
-          <MovieFilter onSetFilter={handleSetFilter} />
+    <>
+      <Hero />
+      <section id='movies'>
+        {filteredMovies ? (
+          <div className='container movies-container'>
+            <div className='section-head'>
+              <span className='eyebrow'>Now Trending</span>
+              <h1>Popular Movies</h1>
+              <p className='sub'>
+                {filteredMovies.length} hand-picked titles from around the world.
+                Find your next watch.
+              </p>
+            </div>
 
-          <div className='movie-container grid'>
-            {filteredMovies.slice(0, displayCount).map((movie) => (
-              <div className='movie-card flex center' key={movie.id}>
-                <img src={API_IMG + movie.poster_path} alt={movie.title} />
-                <small>Rate: {movie.vote_average.toFixed(1)}</small>
-                <button className='btn' onClick={() => handleReadMore(movie)}>
-                  Read More
+            <MovieFilter onSetFilter={handleSetFilter} />
+
+            <div className='movie-grid grid'>
+              {filteredMovies.slice(0, displayCount).map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  media={movie}
+                  onReadMore={handleReadMore}
+                />
+              ))}
+            </div>
+
+            {filteredMovies.length === 0 && (
+              <p className='empty-state'>No titles match your filters.</p>
+            )}
+
+            {displayCount < filteredMovies.length && (
+              <div className='load-more-btn flex center'>
+                <button className='btn btn-primary' onClick={handleLoadMore}>
+                  Load More
                 </button>
               </div>
-            ))}
+            )}
           </div>
-        </div>
-      ) : (
-        <Loader />
-      )}
-      <div className='load-more-btn flex center'>
-        <button className='btn' onClick={handleLoadMore}>
-          Load More
-        </button>
-      </div>
-    </section>
+        ) : (
+          <Loader />
+        )}
+      </section>
+    </>
   )
 }
 
