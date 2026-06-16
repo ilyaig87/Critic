@@ -21,6 +21,7 @@ const MediaDetails = () => {
       .getMediaById(+id, location.state.media, location.state.fromSearch)
       .then((data) => setMedia(data))
     window.scrollTo(0, 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const convertDate = (date) => {

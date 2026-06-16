@@ -19,12 +19,14 @@ const TvShows = () => {
 
   useEffect(() => {
     loadTvShows()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if (tvShows) {
       setFilteredTvShows(tvShows.filter(filterTvShow))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tvShows, filterBy])
 
   const handleReadMore = (result) => {
@@ -50,7 +52,7 @@ const TvShows = () => {
   }
 
   const filterTvShow = (tvShow) => {
-    const { movieTitle, rating, releaseDate } = filterBy
+    const { movieTitle, rating } = filterBy
     if (
       movieTitle &&
       !tvShow.name.toLowerCase().includes(movieTitle.toLowerCase())

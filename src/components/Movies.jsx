@@ -26,6 +26,7 @@ const Movies = () => {
     if (movies) {
       setFilteredMovies(movies.filter(filterMovie))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movies, filterBy])
 
   const handleReadMore = (result) => {
@@ -51,7 +52,7 @@ const Movies = () => {
   }
 
   const filterMovie = (movie) => {
-    const { movieTitle, rating, releaseDate } = filterBy
+    const { movieTitle, rating } = filterBy
     if (
       movieTitle &&
       !movie.title.toLowerCase().includes(movieTitle.toLowerCase())
