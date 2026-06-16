@@ -12,6 +12,17 @@ export const movieService = {
   getMediaById,
 }
 
+// The TMDB "popular" list is dynamic, so the same title can show up on
+// multiple pages while we paginate. Remove duplicates by id.
+function uniqueById(items = []) {
+  const seen = new Set()
+  return items.filter((item) => {
+    if (!item || item.id == null || seen.has(item.id)) return false
+    seen.add(item.id)
+    return true
+  })
+}
+
 async function getMovies() {
   let movies = storageService.loadFromStorage('moviesDB')
   if (!movies || movies.length === 0) {
@@ -28,8 +39,9 @@ async function getMovies() {
         console.error(error)
       }
     }
-    storageService.saveToStorage('moviesDB', movies)
   }
+  movies = uniqueById(movies)
+  storageService.saveToStorage('moviesDB', movies)
   return movies
 }
 
@@ -49,8 +61,9 @@ async function getTvShows() {
         console.error(error)
       }
     }
-    storageService.saveToStorage('tvShowsDB', tvShows)
   }
+  tvShows = uniqueById(tvShows)
+  storageService.saveToStorage('tvShowsDB', tvShows)
   return tvShows
 }
 
@@ -132,8 +145,9 @@ async function searchAll(searchQuery) {
     if (!data.results || data.results.length === 0) {
       throw new Error('No Data Found')
     }
-    storageService.saveToStorage('searchedDB', data.results)
-    return data.results
+    const results = uniqueById(data.results)
+    storageService.saveToStorage('searchedDB', results)
+    return results
   } catch (error) {
     console.error(error)
     return []
